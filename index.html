@@ -819,7 +819,7 @@
       </div>
     </div>
 
-    <h2 data-i18n="textFormat">🔤 টেক্সট ফরম্যাট</h2>
+    <h2 data-i18n="textFormat">টেক্সট ফরম্যাট</h2>
     <div class="group">
       <div class="row">
         <label data-i18n="fontFamily">ফন্ট</label>
@@ -842,7 +842,7 @@
       </div>
     </div>
 
-    <h2 data-i18n="templates">🎨 টেমপ্লেট</h2>
+    <h2 data-i18n="templates">টেমপ্লেট</h2>
     <div class="group">
       <div class="chips" id="templates">
         <span class="chip active" data-tpl="banner">ব্যানার</span>
@@ -2160,7 +2160,73 @@ $("#resetLayout").addEventListener("click", ()=>{
   buildBaseBG(); applyBG();
   select(null);
 });
-$("#print").addEventListener("click", ()=> window.print());
+
+// Print Function - Print only the poster canvas
+async function printPoster() {
+  setStatus(ids.uiLang.value==="bn" ? "প্রিন্টের জন্য প্রস্তুত করা হচ্ছে…" : "Preparing for print…");
+  
+  // Temporarily remove transform for clean capture
+  const z = poster.style.transform; 
+  poster.style.transform="";
+  
+  // Create canvas from poster
+  const canvas = await html2canvas(poster, {backgroundColor:"#ffffff", scale:2});
+  poster.style.transform=z;
+  
+  // Create a new window for printing
+  const printWindow = window.open('', '_blank');
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Election Poster - Print</title>
+      <style>
+        body { 
+          margin: 0; 
+          padding: 0; 
+          display: flex; 
+          justify-content: center; 
+          align-items: center; 
+          min-height: 100vh;
+          background: white;
+        }
+        img { 
+          max-width: 100%; 
+          max-height: 100vh; 
+          object-fit: contain;
+        }
+        @media print {
+          body { margin: 0; }
+          img { 
+            width: 100%; 
+            height: auto; 
+            max-height: none;
+            object-fit: contain;
+            page-break-inside: avoid;
+          }
+        }
+      </style>
+    </head>
+    <body>
+      <img src="${canvas.toDataURL('image/png')}" alt="Election Poster" />
+    </body>
+    </html>
+  `);
+  
+  printWindow.document.close();
+  
+  // Wait for image to load then print
+  printWindow.onload = function() {
+    setTimeout(() => {
+      printWindow.print();
+      printWindow.close();
+    }, 500);
+  };
+  
+  setStatus(ids.uiLang.value==="bn" ? "প্রিন্ট ডায়ালগ খোলা হয়েছে।" : "Print dialog opened.");
+}
+
+$("#print").addEventListener("click", printPoster);
 
 /* ========= i18n ========= */
 const I18N = {
