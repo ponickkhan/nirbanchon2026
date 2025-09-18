@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>নির্বাচন ২০২৬ — পোস্টার নির্মাতা (বাংলাদেশ)</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;700;900&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --ink:#11131a; --muted:#5f667a; --line:#d7dbe7; --brand:#136f63; --accent:#e63946; --bg:#f6f8ff;
+    --bangla:"Noto Sans Bengali", system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", sans-serif;
+    --latin:"Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", sans-serif;
+  }
+  *{ box-sizing:border-box }
+  html,body{ height:100% }
+  body{ margin:0; background:var(--bg); color:var(--ink); font-family:var(--bangla) }
+
+  .app{
+    display:grid; grid-template-columns: 360px 1fr; gap:14px;
+    height:100svh; padding:14px;
+  }
+
+  .panel{ background:#fff; border:1px solid var(--line); border-radius:12px; overflow:auto; padding:12px }
+  .panel h2{ font-size:16px; margin:10px 0; letter-spacing:.3px }
+  .group{ border:1px solid var(--line); border-radius:10px; padding:10px; margin:8px 0; background:#fbfcff }
+  .row{ display:flex; gap:10px; align-items:center; margin:8px 0; flex-wrap:wrap }
+  .row label{ font-size:12px; color:var(--muted); min-width:120px }
+  .row input[type="text"], .row select{
+    flex:1 1 180px; min-width:180px; padding:10px 12px; border:1px solid var(--line); border-radius:10px; font-family:var(--bangla);
+  }
+  .row input[type="file"]{ flex:1 1 180px }
+  .row .mini{ width:110px }
+  .btn{ appearance:none; border:1px solid var(--line); background:#fff; padding:10px 12px; border-radius:10px; font-weight:700; cursor:pointer; font-family:var(--bangla) }
+  .btn.primary{ background:var(--brand); color:#fff; border-color:var(--brand) }
+  .btn.warn{ background:var(--accent); color:#fff; border-color:var(--accent) }
+  .btn.block{ display:block; width:100% }
+  .chips{ display:flex; flex-wrap:wrap; gap:6px }
+  .chip{ padding:8px 10px; border:1px solid var(--line); border-radius:999px; cursor:pointer; font-size:12px; background:#fff; user-select:none }
+  .chip.active{ background:#e8f5f2; border-color:#b6e1d9; }
+
+  /* BIGGER color pickers */
+  .row input[type="color"]{
+    width:160px; height:72px; padding:0; border:3px solid var(--line); border-radius:12px;
+    background:#fff; cursor:pointer; box-shadow:0 3px 8px rgba(0,0,0,.08);
+  }
+  input[type="color"]::-webkit-color-swatch-wrapper{ padding:0; border-radius:10px }
+  input[type="color"]::-webkit-color-swatch{ border:none; border-radius:10px }
+  input[type="color"]::-moz-color-swatch{ border:none; border-radius:10px }
+
+  .stage-wrap{ display:grid; grid-template-rows: auto 1fr auto; gap:10px; min-width:0 }
+  .toolbar{ display:flex; gap:8px; align-items:center; background:#fff; border:1px solid var(--line); border-radius:12px; padding:10px }
+  .toolbar .spacer{ flex:1 }
+  .status{ font-size:12px; color:var(--muted) }
+
+  .canvas-wrap{
+    display:flex; align-items:center; justify-content:center;
+    background:repeating-conic-gradient(#f4f6ff 0% 25%, transparent 0% 50%) 0 0/22px 22px;
+    border:1px dashed #dfe4f2; border-radius:12px; padding:16px; overflow:auto
+  }
+
+  #poster{ position:relative; background:#fff; box-shadow:0 12px 28px rgba(16,24,40,.12), 0 2px 6px rgba(16,24,40,.06); overflow:hidden; transform-origin:top center }
+  .A4-portrait{ width:794px; height:1123px }
+  .A3-portrait{ width:1123px; height:1586px }
+  .Square{ width:1080px; height:1080px }
+
+  .bg-fill{ position:absolute; inset:0; background:#fff }
+  .header{ position:absolute; left:0; right:0; top:0; padding:28px 32px; display:flex; gap:16px; align-items:center; color:#fff; min-height:180px }
+  .header .party-logo{ width:68px; height:68px; object-fit:cover; border-radius:8px; background:#fff; border:3px solid rgba(255,255,255,.75) }
+  .header .title{ display:flex; flex-direction:column; line-height:1.05 }
+  .header .title .party{ font-weight:800; font-size:28px; letter-spacing:.3px }
+  .header .title .election{ font-weight:600; opacity:.95 }
+  .ribbon{ position:absolute; right:-60px; top:70px; transform:rotate(38deg); color:#fff; padding:8px 120px; font-weight:800; letter-spacing:1px; text-shadow:0 1px 2px rgba(0,0,0,.25) }
+  .candidate{ position:absolute; left:32px; bottom:220px; display:flex; gap:18px; align-items:flex-end }
+  .candidate .photo{ width:260px; height:320px; background:#eef2ff; border-radius:14px; object-fit:cover; border:6px solid #fff }
+  .candidate .info{ display:flex; flex-direction:column; gap:6px }
+  .candidate .name{ font-size:48px; font-weight:900; line-height:.95 }
+  .candidate .role{ font-size:18px; opacity:.85 }
+
+  .slogan{
+    position:absolute; left:32px; right:32px; bottom:76px;
+    background:#ffffffea; border-radius:12px; padding:10px 14px;
+    display:flex; justify-content:space-between; align-items:center; gap:16px; border:1px solid #e7e9f4
+  }
+  .slogan .text{ font-size:22px; font-weight:800 }
+  .symbol { width:76px; height:76px; background:#fff; border:2px solid #111; border-radius:10px; object-fit:contain; display:flex; align-items:center; justify-content:center; overflow:hidden }
+  .symbol img{ width:100%; height:100%; object-fit:contain }
+
+  .footer{ position:absolute; left:0; right:0; bottom:0; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; color:#fff; font-weight:700; min-height:56px }
+  .badge{ background:#ffffff; color:#000; padding:6px 10px; border-radius:999px; font-size:12px; font-weight:800 }
+
+  .draggable{ position:absolute; cursor:move; user-select:none }
+  .selected{ outline:2px dashed #7c3aed; outline-offset:2px }
+  .handle{ position:absolute; width:12px; height:12px; background:#7c3aed; bottom:-6px; right:-6px; border-radius:2px; cursor:nwse-resize; }
+
+  @media print{
+    body{ background:#fff }
+    .app{ display:block; padding:0 }
+    .panel, .toolbar{ display:none !important }
+    .canvas-wrap{ border:0; padding:0 }
+    #poster{ box-shadow:none; transform:none !important }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="panel" id="sidebar">
+    <h2 data-i18n="settings">পোস্টার সেটিংস</h2>
+    <div class="group">
+      <div class="row">
+        <label data-i18n="size">আকার</label>
+        <select id="size">
+          <option value="A3-portrait">A3 Portrait</option>
+          <option value="A4-portrait" selected>A4 Portrait</option>
+          <option value="Square">Square (1080×1080)</option>
+        </select>
+      </div>
+      <div class="row">
+        <label data-i18n="lang">ভাষা</label>
+        <select id="uiLang">
+          <option value="bn" selected>বাংলা</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+      <div class="row">
+        <label data-i18n="primary">প্রাইমারি</label><input type="color" id="cPrimary" value="#136f63">
+        <label class="mini" data-i18n="secondary">সেকেন্ডারি</label><input type="color" id="cSecondary" value="#0a9396">
+      </div>
+      <div class="row">
+        <label data-i18n="accent">অ্যাকসেন্ট</label><input type="color" id="cAccent" value="#e63946">
+        <label class="mini" data-i18n="text">টেক্সট</label><input type="color" id="cText" value="#11131a">
+      </div>
+      <div class="chips" id="palette">
+        <span class="chip" data-pal="flag">🇧🇩 Flag</span>
+        <span class="chip" data-pal="civic">Civic</span>
+        <span class="chip" data-pal="youth">Youth</span>
+        <span class="chip active" data-pal="classic">Classic</span>
+      </div>
+    </div>
+
+    <h2 data-i18n="content">বিষয়বস্তু</h2>
+    <div class="group">
+      <div class="row"><label data-i18n="party">দল</label><input type="text" id="party" placeholder="দলের নাম" value="দলের নাম" /></div>
+      <div class="row"><label data-i18n="election">নির্বাচন</label><input type="text" id="election" placeholder="জাতীয় নির্বাচন ২০২৬" value="জাতীয় নির্বাচন ২০২৬" /></div>
+      <div class="row"><label data-i18n="candidate">প্রার্থী</label><input type="text" id="candidate" placeholder="প্রার্থীর নাম" value="প্রার্থীর নাম" /></div>
+      <div class="row"><label data-i18n="role">পদ/আসন</label><input type="text" id="role" placeholder="নির্বাচনী এলাকা • ঢাকা-১" value="নির্বাচনী এলাকা • ঢাকা-১" /></div>
+      <div class="row"><label data-i18n="slogan">স্লোগান</label><input type="text" id="slogan" placeholder="অগ্রগতি • স্থিতিশীলতা • সমৃদ্ধি" value="অগ্রগতি • স্থিতিশীলতা • সমৃদ্ধি" /></div>
+      <div class="row"><label data-i18n="hashtag">হ্যাশট্যাগ</label><input type="text" id="hashtag" placeholder="#ভোট২০২৬" value="#ভোট২০২৬" /></div>
+    </div>
+
+    <h2 data-i18n="media">মিডিয়া</h2>
+    <div class="group">
+      <div class="row"><label data-i18n="partyLogo">দলের লোগো</label><input type="file" id="logo" accept="image/*" /></div>
+      <div class="row"><label data-i18n="candidatePhoto">প্রার্থীর ছবি</label><input type="file" id="photo" accept="image/*" /></div>
+      <div class="row"><label data-i18n="symbol">প্রতীক</label><input type="file" id="symbol" accept="image/*" /></div>
+      <div class="row"><button class="btn" id="clearMedia" type="button" data-i18n="clearMedia">মিডিয়া মুছুন</button></div>
+    </div>
+
+    <h2 data-i18n="elements">উপাদান</h2>
+    <div class="group">
+      <div class="row" style="gap:6px">
+        <button class="btn" id="addText" type="button" data-i18n="addText">টেক্সট যোগ করুন</button>
+        <button class="btn" id="addShape" type="button" data-i18n="addShape">আকৃতি যোগ করুন</button>
+        <button class="btn" id="addImage" type="button" data-i18n="addImage">ছবি যোগ করুন</button>
+      </div>
+      <div class="row" style="gap:6px">
+        <button class="btn" id="bringFront" type="button" data-i18n="bringFront">সামনে আনুন</button>
+        <button class="btn" id="sendBack" type="button" data-i18n="sendBack">পেছনে পাঠান</button>
+        <button class="btn warn" id="deleteSel" type="button" data-i18n="delete">মুছুন</button>
+      </div>
+    </div>
+
+    <h2 data-i18n="templates">টেমপ্লেট</h2>
+    <div class="group">
+      <div class="chips" id="templates">
+        <span class="chip active" data-tpl="banner">ব্যানার</span>
+        <span class="chip" data-tpl="wave">তরঙ্গ</span>
+        <span class="chip" data-tpl="diagonal">ডায়াগোনাল</span>
+        <span class="chip" data-tpl="minimal">মিনিমাল</span>
+        <span class="chip" data-tpl="mesh">মেশ</span>
+        <span class="chip" data-tpl="triangles">ত্রিভুজ</span>
+        <span class="chip" data-tpl="rays">রশ্মি</span>
+        <span class="chip" data-tpl="tiles">টাইলস</span>
+        <span class="chip" data-tpl="hexagon">ষড়ভুজ</span>
+        <span class="chip" data-tpl="circles">বৃত্ত</span>
+        <span class="chip" data-tpl="gradient">গ্রেডিয়েন্ট</span>
+        <span class="chip" data-tpl="geometric">জ্যামিতিক</span>
+        <span class="chip" data-tpl="stripes">ডোরা</span>
+        <span class="chip" data-tpl="diamond">হীরক</span>
+        <span class="chip" data-tpl="modern">আধুনিক</span>
+        <span class="chip" data-tpl="elegant">মার্জিত</span>
+      </div>
+    </div>
+
+    <h2 data-i18n="export">এক্সপোর্ট</h2>
+    <div class="group">
+      <div class="row" style="gap:6px">
+        <button class="btn primary block" id="exportPNG" type="button" data-i18n="exportPNG">PNG এক্সপোর্ট</button>
+      </div>
+      <div class="row" style="gap:6px">
+        <button class="btn block" id="exportPDF" type="button" data-i18n="exportPDF">PDF এক্সপোর্ট</button>
+      </div>
+      <div class="row"><span class="status" id="status">প্রস্তুত।</span></div>
+    </div>
+  </aside>
+
+  <!-- STAGE -->
+  <section class="stage-wrap">
+    <div class="toolbar">
+      <div class="chips" id="zoomBar">
+        <span class="chip" data-zoom="0.75">75%</span>
+        <span class="chip active" data-zoom="1">100%</span>
+        <span class="chip" data-zoom="1.25">125%</span>
+        <span class="chip" data-zoom="1.5">150%</span>
+      </div>
+      <div class="spacer"></div>
+      <button class="btn" id="resetLayout" type="button" data-i18n="resetLayout">লেআউট রিসেট</button>
+      <button class="btn" id="print" type="button" data-i18n="print">প্রিন্ট</button>
+    </div>
+
+    <div class="canvas-wrap">
+      <div id="poster" class="A4-portrait" aria-label="Poster Canvas">
+        <div class="bg-fill" id="bg"></div>
+
+        <!-- Header -->
+        <div class="header draggable" id="header" style="background:linear-gradient(90deg,#136f63,#0a9396)">
+          <img class="party-logo" id="partyLogo" alt="">
+          <div class="title">
+            <div class="party" id="partyText">দলের নাম</div>
+            <div class="election" id="electionText">জাতীয় নির্বাচন ২০২৬</div>
+          </div>
+          <div class="ribbon" id="ribbon">বাংলাদেশ ২০২৬</div>
+        </div>
+
+        <!-- Candidate -->
+        <div class="candidate draggable" id="candidateBox">
+          <img class="photo" id="candidatePhoto" alt="">
+          <div class="info">
+            <div class="name" id="candidateName">প্রার্থীর নাম</div>
+            <div class="role" id="roleText">নির্বাচনী এলাকা • ঢাকা-১</div>
+          </div>
+        </div>
+
+        <!-- Slogan -->
+        <div class="slogan draggable" id="sloganBox">
+          <div class="text" id="sloganText">অগ্রগতি • স্থিতিশীলতা • সমৃদ্ধি</div>
+          <div class="badge" id="hashtagText">#ভোট২০২৬</div>
+          <div class="symbol"><img id="symbolImg" alt=""></div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer draggable" id="footer" style="background:linear-gradient(90deg,#0a9396,#136f63)">
+          <div id="footerText">নির্বাচন কমিশন অনুবর্তী লেআউট</div>
+          <div class="badge" id="siteText">www.reeadigital.com</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toolbar" style="justify-content:flex-end">
+      <span class="status">টিপস: যে কোনো উপাদান টেনে আনুন; ক্লিক করে সিলেক্ট করুন; বেগুনি হ্যান্ডল দিয়ে আকার বদলান।</span>
+    </div>
+  </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+<script>
+/* ========= Shortcuts ========= */
+const $ = (q, root=document) => root.querySelector(q);
+const $$ = (q, root=document) => Array.from(root.querySelectorAll(q));
+const poster = $("#poster");
+const ids = {
+  party: $("#party"), election: $("#election"), candidate: $("#candidate"),
+  role: $("#role"), slogan: $("#slogan"), hashtag: $("#hashtag"),
+  cPrimary: $("#cPrimary"), cSecondary: $("#cSecondary"), cAccent: $("#cAccent"), cText: $("#cText"),
+  size: $("#size"), uiLang: $("#uiLang"),
+  logo: $("#logo"), photo: $("#photo"), symbol: $("#symbol"),
+  partyText: $("#partyText"), electionText: $("#electionText"),
+  candidateName: $("#candidateName"), roleText: $("#roleText"),
+  sloganText: $("#sloganText"), hashtagText: $("#hashtagText"),
+  header: $("#header"), footer: $("#footer"), bg: $("#bg"),
+  partyLogo: $("#partyLogo"), candidatePhoto: $("#candidatePhoto"),
+  ribbon: $("#ribbon"), sloganBox: $("#sloganBox"), candidateBox: $("#candidateBox"),
+  symbolImg: $("#symbolImg"), status: $("#status")
+};
+function setStatus(msg){ ids.status.textContent=msg; setTimeout(()=>ids.status.textContent=(ids.uiLang.value==="bn"?"প্রস্তুত।":"Ready."), 2000); }
+
+/* ========= Size / Zoom ========= */
+ids.size.addEventListener("change", e=>{
+  poster.classList.remove("A4-portrait","A3-portrait","Square");
+  poster.classList.add(e.target.value);
+  poster.style.transform = "";
+});
+$("#zoomBar").addEventListener("click", e=>{
+  const chip = e.target.closest(".chip"); if(!chip) return;
+  $$("#zoomBar .chip").forEach(c=>c.classList.remove("active"));
+  chip.classList.add("active");
+  const z = parseFloat(chip.dataset.zoom||"1");
+  poster.style.transform = `scale(${z})`;
+  poster.style.transformOrigin = "top center";
+});
+
+/* ========= Palette ========= */
+$("#palette").addEventListener("click", e=>{
+  const chip = e.target.closest(".chip"); if(!chip) return;
+  $$("#palette .chip").forEach(c=>c.classList.remove("active"));
+  chip.classList.add("active");
+  const sets = {
+    flag:     ["#006a4e","#da291c","#ffc300","#11131a"],
+    civic:    ["#1d3557","#457b9d","#e63946","#11131a"],
+    youth:    ["#0ea5e9","#22c55e","#a855f7","#0f172a"],
+    classic:  ["#0b3d2e","#1e847f","#eec643","#222222"],
+  };
+  const [p,s,a,t] = sets[chip.dataset.pal] || sets.flag;
+  ids.cPrimary.value=p; ids.cSecondary.value=s; ids.cAccent.value=a; ids.cText.value=t;
+  applyColors(); randomRibbon(); buildBaseBG(); applyBG();
+});
+["cPrimary","cSecondary","cAccent","cText"].forEach(id=>{
+  ids[id].addEventListener("input", ()=>{ applyColors(); randomRibbon(); buildBaseBG(); applyBG(); });
+});
+
+/* ========= Colors ========= */
+function applyColors(){
+  const p = ids.cPrimary.value, s = ids.cSecondary.value, a=ids.cAccent.value, t=ids.cText.value;
+  ids.header.style.background = `linear-gradient(90deg, ${p}, ${s})`;
+  ids.footer.style.background = `linear-gradient(90deg, ${s}, ${p})`;
+  ids.partyText.style.color = "#fff";
+  ids.electionText.style.color = "#fff";
+  ids.candidateName.style.color = t;
+  ids.roleText.style.color = "#3b3f4c";
+  ids.sloganText.style.color = "#0b1320";
+  ids.hashtagText.style.background = a; ids.hashtagText.style.color = "#fff";
+}
+
+/* ========= Abstract BG engine (base + overlay) ========= */
+let BG_BASE = "", BG_OVERLAY = "";
+function svgEncode(s){ return 'data:image/svg+xml;utf8,' + encodeURIComponent(s); }
+function buildBaseBG(){
+  const p = ids.cPrimary.value, s = ids.cSecondary.value, a = ids.cAccent.value;
+  const seed = Math.floor(Math.random()*9999);
+  const svg = `
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="2200" viewBox="0 0 1600 2200">
+  <defs>
+    <filter id="noise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="${seed}" result="t" />
+      <feColorMatrix type="saturate" values="0.25"/>
+      <feComponentTransfer>
+        <feFuncA type="table" tableValues="0 0.07"/>
+      </feComponentTransfer>
+    </filter>
+    <radialGradient id="rg1" cx="18%" cy="12%" r="58%">
+      <stop offset="0%" stop-color="${p}" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="${p}" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="rg2" cx="82%" cy="10%" r="55%">
+      <stop offset="0%" stop-color="${s}" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="${s}" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="rg3" cx="50%" cy="92%" r="62%">
+      <stop offset="0%" stop-color="${a}" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="${a}" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <rect width="100%" height="100%" filter="url(#noise)"/>
+  <rect width="100%" height="100%" fill="url(#rg1)"/>
+  <rect width="100%" height="100%" fill="url(#rg2)"/>
+  <rect width="100%" height="100%" fill="url(#rg3)"/>
+</svg>`;
+  const url = svgEncode(svg);
+  // base layers (bottom-most last)
+  BG_BASE = `
+    url("${url}") center/cover no-repeat,
+    radial-gradient(120% 80% at 0% 0%, ${p}20 0%, #fff 60%),
+    radial-gradient(120% 80% at 100% 0%, ${s}20 0%, #fff 60%),
+    linear-gradient(#fff, #fff)
+  `.trim();
+}
+function setTemplateOverlay(name){
+  const p = ids.cPrimary.value, s = ids.cSecondary.value, a=ids.cAccent.value;
+  const overlays = {
+    banner:   `linear-gradient(180deg, #ffffff00 0%, #ffffffaa 40%, ${p}12 100%)`,
+    wave:     `radial-gradient(120% 60% at -10% 0%, ${p}33 0%, #fff0 60%), radial-gradient(100% 50% at 110% 0%, ${s}33 0%, #fff0 60%)`,
+    diagonal: `linear-gradient(135deg, ${p}18 0%, #fff0 45%, #fff0 55%, ${s}18 100%)`,
+    minimal:  ``,
+    mesh:     `radial-gradient(40% 50% at 15% 10%, ${p}22, transparent),
+               radial-gradient(50% 60% at 85% 20%, ${s}22, transparent),
+               radial-gradient(35% 45% at 50% 90%, ${a}18, transparent)`,
+    triangles:`repeating-linear-gradient(60deg, ${p}14 0 18px, transparent 18px 36px),
+               repeating-linear-gradient(-60deg, ${s}14 0 18px, transparent 18px 36px)`,
+    rays:     `conic-gradient(from 180deg at 50% 20%, ${p}14, #fff0 20%, ${s}14 40%, #fff0 60%, ${a}14 80%, #fff0 100%)`,
+    tiles:    `repeating-conic-gradient(from 45deg, ${p}12 0 12deg, ${s}10 12deg 24deg, #ffffff00 24deg 36deg)`,
+    hexagon:  `radial-gradient(circle at 25% 25%, ${p}20 0%, transparent 50%),
+               radial-gradient(circle at 75% 25%, ${s}20 0%, transparent 50%),
+               radial-gradient(circle at 50% 75%, ${a}15 0%, transparent 50%)`,
+    circles:  `radial-gradient(circle at 20% 20%, ${p}25, transparent 35%),
+               radial-gradient(circle at 80% 30%, ${s}25, transparent 35%),
+               radial-gradient(circle at 60% 80%, ${a}20, transparent 30%)`,
+    gradient: `linear-gradient(45deg, ${p}08 0%, ${s}12 50%, ${a}08 100%)`,
+    geometric:`polygon(0 0, 100% 0, 85% 100%, 0 100%) linear-gradient(120deg, ${p}15, transparent),
+               polygon(15% 0, 100% 0, 100% 100%, 0 100%) linear-gradient(240deg, ${s}15, transparent)`,
+    stripes:  `repeating-linear-gradient(45deg, ${p}18 0, ${p}18 20px, transparent 20px, transparent 40px),
+               repeating-linear-gradient(-45deg, ${s}15 0, ${s}15 15px, transparent 15px, transparent 30px)`,
+    diamond:  `repeating-conic-gradient(from 0deg at 50% 50%, ${p}18 0deg 45deg, transparent 45deg 90deg, ${s}18 90deg 135deg, transparent 135deg 180deg)`,
+    modern:   `radial-gradient(ellipse 80% 50% at 50% 0%, ${p}20, transparent),
+               linear-gradient(180deg, transparent 60%, ${s}12 100%)`,
+    elegant:  `linear-gradient(135deg, ${p}05 0%, transparent 25%, ${s}08 50%, transparent 75%, ${a}05 100%),
+               radial-gradient(circle at 80% 20%, ${p}12, transparent 40%)`
+  };
+  BG_OVERLAY = (overlays[name] || "").replace(/\s+/g,' ').trim();
+}
+function applyBG(){
+  // if overlay present, it should be top-most (first)
+  ids.bg.style.background = BG_OVERLAY ? `${BG_OVERLAY}, ${BG_BASE}` : BG_BASE;
+}
+
+/* ========= Templates ========= */
+$("#templates").addEventListener("click", e=>{
+  const chip = e.target.closest(".chip"); if(!chip) return;
+  $$("#templates .chip").forEach(c=>c.classList.remove("active"));
+  chip.classList.add("active");
+  const tpl = chip.dataset.tpl;
+
+  // Section geometry tweaks per template
+  $("#header").style.height = "30%";
+  $(".footer").style.height = "56px";
+  $("#candidateBox").style.bottom = "220px";
+  $("#sloganBox").style.bottom = "76px";
+  
+  // Template-specific layout adjustments
+  if(tpl==="minimal"){
+    $("#header").style.height = "22%";
+    $("#candidateBox").style.bottom = "170px";
+    $("#sloganBox").style.bottom = "40px";
+  } else if(tpl==="modern" || tpl==="elegant"){
+    $("#header").style.height = "35%";
+    $("#candidateBox").style.bottom = "230px";
+    $("#sloganBox").style.bottom = "80px";
+  } else if(tpl==="geometric" || tpl==="diamond"){
+    $("#header").style.height = "28%";
+    $("#candidateBox").style.bottom = "210px";
+    $("#sloganBox").style.bottom = "70px";
+  } else if(tpl==="gradient" || tpl==="circles"){
+    $("#header").style.height = "32%";
+    $("#candidateBox").style.bottom = "225px";
+    $("#sloganBox").style.bottom = "78px";
+  } else if(tpl==="hexagon" || tpl==="stripes"){
+    $("#header").style.height = "29%";
+    $("#candidateBox").style.bottom = "215px";
+    $("#sloganBox").style.bottom = "74px";
+  }
+
+  setTemplateOverlay(tpl);
+  randomRibbon();
+  applyBG();
+});
+
+/* ========= Ribbon random styles ========= */
+const RIBBON_STYLES = [
+  (a) => `linear-gradient(135deg, ${a}, ${a}cc)`,
+  (a) => `repeating-linear-gradient(45deg, ${a}, ${a} 10px, #ffffff 10px, #ffffff 20px)`,
+  (a) => `radial-gradient(circle at center, ${a}, ${a}aa)`,
+  (a) => `${a}`,
+  (a) => `conic-gradient(from 45deg, ${a}cc, ${a}, ${a}dd)`
+];
+function randomRibbon(){
+  const a = ids.cAccent.value;
+  const styleFn = RIBBON_STYLES[Math.floor(Math.random()*RIBBON_STYLES.length)];
+  ids.ribbon.style.background = styleFn(a);
+  ids.ribbon.style.color = "#fff";
+}
+
+/* ========= Content binding ========= */
+ids.party.addEventListener("input", e=> ids.partyText.textContent = e.target.value||"");
+ids.election.addEventListener("input", e=> ids.electionText.textContent = e.target.value||"");
+ids.candidate.addEventListener("input", e=> ids.candidateName.textContent = e.target.value||"");
+ids.role.addEventListener("input", e=> ids.roleText.textContent = e.target.value||"");
+ids.slogan.addEventListener("input", e=> ids.sloganText.textContent = e.target.value||"");
+ids.hashtag.addEventListener("input", e=> ids.hashtagText.textContent = e.target.value||"");
+
+/* ========= Media ========= */
+function loadImage(file, imgEl){
+  if(!file) return (imgEl.removeAttribute("src"), void 0);
+  const r = new FileReader();
+  r.onload = ()=> imgEl.src = r.result;
+  r.readAsDataURL(file);
+}
+ids.logo.addEventListener("change", e=> loadImage(e.target.files[0], ids.partyLogo));
+ids.photo.addEventListener("change", e=> loadImage(e.target.files[0], ids.candidatePhoto));
+ids.symbol.addEventListener("change", e=> loadImage(e.target.files[0], ids.symbolImg));
+$("#clearMedia").addEventListener("click", ()=>{
+  ids.logo.value=""; ids.photo.value=""; ids.symbol.value="";
+  ids.partyLogo.removeAttribute("src"); ids.candidatePhoto.removeAttribute("src"); ids.symbolImg.removeAttribute("src");
+});
+
+/* ========= Drag / Resize ========= */
+let selected = null, dragOff=[0,0], resizing=false;
+function select(el){
+  if(selected && selected!==el){ selected.classList.remove("selected"); const h=selected.querySelector(".handle"); if(h) h.remove(); }
+  selected = el;
+  if(!selected) return;
+  selected.classList.add("selected");
+  if(!selected.querySelector(".handle")){
+    const h = document.createElement("div"); h.className="handle"; selected.appendChild(h);
+  }
+}
+["candidateBox","sloganBox","header","footer","ribbon"].forEach(id=>{
+  const el = $("#"+id); el.classList.add("draggable");
+  if(id==="header" || id==="footer") el.style.position="absolute";
+  el.addEventListener("mousedown", e=>{
+    if(e.target.classList.contains("handle")){ resizing=true; select(el); e.preventDefault(); return; }
+    select(el);
+    const rect = el.getBoundingClientRect();
+    const pr = poster.getBoundingClientRect();
+    dragOff = [e.clientX - rect.left, e.clientY - rect.top];
+    window.addEventListener("mousemove", dragMove);
+    window.addEventListener("mouseup", dragEnd, {once:true});
+  });
+});
+function dragMove(e){
+  if(!selected || resizing) return;
+  const pr = poster.getBoundingClientRect();
+  let x = e.clientX - pr.left - dragOff[0];
+  let y = e.clientY - pr.top  - dragOff[1];
+  x = Math.max(0, Math.min(x, pr.width - selected.offsetWidth));
+  y = Math.max(0, Math.min(y, pr.height - selected.offsetHeight));
+  selected.style.left = x+"px";
+  selected.style.top  = y+"px";
+}
+function dragEnd(){ window.removeEventListener("mousemove", dragMove); }
+poster.addEventListener("mousedown", e=>{
+  const el = e.target.closest(".draggable");
+  if(!el) select(null);
+});
+poster.addEventListener("mousemove", e=>{
+  if(!selected) return;
+  const handle = selected.querySelector(".handle");
+  if(resizing && handle){
+    const pr = poster.getBoundingClientRect();
+    const w = Math.min(pr.width - selected.offsetLeft, Math.max(100, e.clientX - pr.left - selected.offsetLeft));
+    const h = Math.min(pr.height - selected.offsetTop,  Math.max(60,  e.clientY - pr.top  - selected.offsetTop));
+    selected.style.width = w + "px";
+    selected.style.height= h + "px";
+  }
+});
+window.addEventListener("mouseup", ()=>{ resizing=false; });
+
+/* ========= Element buttons ========= */
+$("#addText").addEventListener("click", ()=>{
+  const div = document.createElement("div");
+  div.textContent = (ids.uiLang.value==="bn" ? "সম্পাদনাযোগ্য টেক্সট" : "Editable Text");
+  Object.assign(div.style,{ left:"120px", top:"260px", padding:"6px 10px", fontWeight:"800", background:"#ffffffc8", border:"1px solid #e6e9f4", borderRadius:"8px", fontFamily:(ids.uiLang.value==="bn"?"var(--bangla)":"var(--latin)") });
+  div.contentEditable = "true";
+  div.className = "draggable";
+  poster.appendChild(div);
+  div.addEventListener("mousedown", e=>{
+    select(div);
+    const rect = div.getBoundingClientRect();
+    dragOff = [e.clientX - rect.left, e.clientY - rect.top];
+    window.addEventListener("mousemove", dragMove);
+    window.addEventListener("mouseup", dragEnd, {once:true});
+  });
+  select(div);
+});
+$("#addShape").addEventListener("click", ()=>{
+  const box = document.createElement("div");
+  Object.assign(box.style,{ left:"80px", top:"420px", width:"220px", height:"90px", background: ids.cAccent.value+"55", border:"2px solid "+ids.cAccent.value, borderRadius:"12px" });
+  box.className="draggable";
+  poster.appendChild(box);
+  box.addEventListener("mousedown", e=>{
+    select(box);
+    const rect = box.getBoundingClientRect();
+    dragOff = [e.clientX - rect.left, e.clientY - rect.top];
+    window.addEventListener("mousemove", dragMove);
+    window.addEventListener("mouseup", dragEnd, {once:true});
+  });
+  select(box);
+});
+$("#addImage").addEventListener("click", ()=>{
+  const inp = document.createElement("input");
+  inp.type="file"; inp.accept="image/*";
+  inp.onchange = ev=>{
+    const file = ev.target.files[0]; if(!file) return;
+    const img = document.createElement("img");
+    img.className="draggable"; img.style.left="140px"; img.style.top="520px"; img.style.width="240px"; img.style.height="auto"; img.style.borderRadius="10px"; img.style.boxShadow="0 6px 16px rgba(0,0,0,.12)";
+    const r = new FileReader();
+    r.onload=()=>{ img.src=r.result; poster.appendChild(img); select(img);
+      img.addEventListener("mousedown", e=>{
+        select(img);
+        const rect = img.getBoundingClientRect();
+        dragOff=[e.clientX-rect.left, e.clientY-rect.top];
+        window.addEventListener("mousemove", dragMove);
+        window.addEventListener("mouseup", dragEnd,{once:true});
+      });
+    };
+    r.readAsDataURL(file);
+  };
+  inp.click();
+});
+$("#bringFront").addEventListener("click", ()=>{ if(selected){ selected.style.zIndex = (parseInt(selected.style.zIndex||"1")+1) }});
+$("#sendBack").addEventListener("click", ()=>{ if(selected){ selected.style.zIndex = (parseInt(selected.style.zIndex||"1")-1) }});
+$("#deleteSel").addEventListener("click", ()=>{ if(selected && !["header","footer","candidateBox","sloganBox","ribbon"].includes(selected.id)){ selected.remove(); selected=null; } });
+
+/* ========= Reset / Print ========= */
+$("#resetLayout").addEventListener("click", ()=>{
+  $("#header").style.left="0"; $("#header").style.top="0"; $("#header").style.right="0";
+  $("#candidateBox").style.left="32px"; $("#candidateBox").style.bottom="220px"; $("#candidateBox").style.top=""; $("#candidateBox").style.right="";
+  $("#sloganBox").style.left="32px"; $("#sloganBox").style.right="32px"; $("#sloganBox").style.bottom="76px";
+  $("#footer").style.left="0"; $("#footer").style.right="0"; $("#footer").style.bottom="0";
+  randomRibbon();
+  buildBaseBG(); applyBG();
+  select(null);
+});
+$("#print").addEventListener("click", ()=> window.print());
+
+/* ========= i18n ========= */
+const I18N = {
+  en: {
+    settings:"Poster Settings", size:"Size", lang:"Language UI", primary:"Primary", secondary:"Secondary", accent:"Accent", text:"Text",
+    content:"Content", party:"Party", election:"Election", candidate:"Candidate", role:"Role", slogan:"Slogan",
+    hashtag:"Hashtag", media:"Media", partyLogo:"Party Logo", candidatePhoto:"Candidate Photo", symbol:"Symbol",
+    clearMedia:"Clear media", elements:"Elements", addText:"Add Text", addShape:"Add Shape", addImage:"Add Image",
+    bringFront:"Bring Front", sendBack:"Send Back", delete:"Delete", templates:"Templates",
+    export:"Export", exportPNG:"Export PNG", exportPDF:"Export PDF", resetLayout:"Reset Layout", print:"Print",
+    placeholders:{ party:"Party Name", election:"National Election 2026", candidate:"Candidate Name", role:"Constituency • Dhaka-1", slogan:"Progress • Stability • Prosperity", hashtag:"#Vote2026" },
+    defaults:{ party:"Party Name", election:"National Election 2026", candidate:"Candidate Name", role:"Constituency • Dhaka-1", slogan:"Progress • Stability • Prosperity", hashtag:"#Vote2026", ribbon:"BANGLADESH 2026", footer:"Election Commission Compliant Layout" }
+  },
+  bn: {
+    settings:"পোস্টার সেটিংস", size:"আকার", lang:"ভাষা", primary:"প্রাইমারি", secondary:"সেকেন্ডারি", accent:"অ্যাকসেন্ট", text:"টেক্সট",
+    content:"বিষয়বস্তু", party:"দল", election:"নির্বাচন", candidate:"প্রার্থী", role:"পদ/আসন", slogan:"স্লোগান",
+    hashtag:"হ্যাশট্যাগ", media:"মিডিয়া", partyLogo:"দলের লোগো", candidatePhoto:"প্রার্থীর ছবি", symbol:"প্রতীক",
+    clearMedia:"মিডিয়া মুছুন", elements:"উপাদান", addText:"টেক্সট যোগ করুন", addShape:"আকৃতি যোগ করুন", addImage:"ছবি যোগ করুন",
+    bringFront:"সামনে আনুন", sendBack:"পেছনে পাঠান", delete:"মুছুন", templates:"টেমপ্লেট",
+    export:"এক্সপোর্ট", exportPNG:"PNG এক্সপোর্ট", exportPDF:"PDF এক্সপোর্ট", resetLayout:"লেআউট রিসেট", print:"প্রিন্ট",
+    placeholders:{ party:"দলের নাম", election:"জাতীয় নির্বাচন ২০২৬", candidate:"প্রার্থীর নাম", role:"নির্বাচনী এলাকা • ঢাকা-১", slogan:"অগ্রগতি • স্থিতিশীলতা • সমৃদ্ধি", hashtag:"#ভোট২০২৬" },
+    defaults:{ party:"দলের নাম", election:"জাতীয় নির্বাচন ২০২৬", candidate:"প্রার্থীর নাম", role:"নির্বাচনী এলাকা • ঢাকা-১", slogan:"অগ্রগতি • স্থিতিশীলতা • সমৃদ্ধি", hashtag:"#ভোট২০২৬", ribbon:"বাংলাদেশ ২০২৬", footer:"নির্বাচন কমিশন অনুবর্তী লেআউট" }
+  }
+};
+let lastLang = "bn";
+function applyI18N(lang){
+  const L = I18N[lang] || I18N.bn;
+  $$("[data-i18n]").forEach(el=>{
+    const key = el.getAttribute("data-i18n");
+    if(L[key]) el.textContent = L[key];
+  });
+  ids.party.placeholder    = L.placeholders.party;
+  ids.election.placeholder = L.placeholders.election;
+  ids.candidate.placeholder= L.placeholders.candidate;
+  ids.role.placeholder     = L.placeholders.role;
+  ids.slogan.placeholder   = L.placeholders.slogan;
+  ids.hashtag.placeholder  = L.placeholders.hashtag;
+
+  const Prev = I18N[lastLang].defaults;
+  const Now  = L.defaults;
+  function maybeSwap(inputEl, posterElKey, prevVal, newVal){
+    if(inputEl.value.trim() === prevVal){ inputEl.value = newVal; ids[posterElKey].textContent = newVal; }
+  }
+  maybeSwap(ids.party,     "partyText",     Prev.party,    Now.party);
+  maybeSwap(ids.election,  "electionText",  Prev.election, Now.election);
+  maybeSwap(ids.candidate, "candidateName", Prev.candidate,Now.candidate);
+  maybeSwap(ids.role,      "roleText",      Prev.role,     Now.role);
+  maybeSwap(ids.slogan,    "sloganText",    Prev.slogan,   Now.slogan);
+  maybeSwap(ids.hashtag,   "hashtagText",   Prev.hashtag,  Now.hashtag);
+
+  if(ids.ribbon.textContent.trim() === Prev.ribbon){ ids.ribbon.textContent = Now.ribbon; }
+  if($("#footerText").textContent.trim() === Prev.footer){ $("#footerText").textContent = Now.footer; }
+
+  lastLang = lang;
+}
+ids.uiLang.addEventListener("change", e=> applyI18N(e.target.value));
+
+/* ========= Export ========= */
+async function exportPNG(){
+  setStatus(ids.uiLang.value==="bn" ? "PNG প্রস্তুত করা হচ্ছে…" : "Rendering PNG…");
+  const z = poster.style.transform; poster.style.transform="";
+  const canvas = await html2canvas(poster, {backgroundColor:null, scale:2});
+  poster.style.transform=z;
+  const data = canvas.toDataURL("image/png");
+  const a = document.createElement("a");
+  a.href = data; a.download = "poster.png"; a.click();
+  setStatus(ids.uiLang.value==="bn" ? "PNG সংরক্ষিত।" : "PNG saved.");
+}
+async function exportPDF(){
+  setStatus(ids.uiLang.value==="bn" ? "PDF প্রস্তুত করা হচ্ছে…" : "Rendering PDF…");
+  const { jsPDF } = window.jspdf;
+  const z = poster.style.transform; poster.style.transform="";
+  const canvas = await html2canvas(poster, {backgroundColor:"#ffffff", scale:2});
+  poster.style.transform=z;
+  const imgData = canvas.toDataURL("image/jpeg", 0.94);
+  const w = canvas.width, h = canvas.height;
+  const pdf = new jsPDF({orientation: h>=w?"p":"l", unit:"pt", format:[w, h]});
+  pdf.addImage(imgData, "JPEG", 0, 0, w, h);
+  pdf.save("poster.pdf");
+  setStatus(ids.uiLang.value==="bn" ? "PDF সংরক্ষিত।" : "PDF saved.");
+}
+$("#exportPNG").addEventListener("click", exportPNG);
+$("#exportPDF").addEventListener("click", exportPDF);
+
+/* ========= Init ========= */
+function initDragBase(){
+  ["candidateBox","sloganBox","header","footer","ribbon"].forEach(id=>{
+    const el = $("#"+id);
+    el.addEventListener("mousedown", e=>{
+      if(e.target.classList.contains("handle")) return;
+      select(el);
+    });
+  });
+}
+applyColors();
+buildBaseBG(); setTemplateOverlay("banner"); applyBG();
+randomRibbon();
+applyI18N("bn"); // Bangla default
+initDragBase();
+setStatus("প্রস্তুত।");
+</script>
+
+</body>
+</html>
