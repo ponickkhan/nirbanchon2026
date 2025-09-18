@@ -1798,11 +1798,15 @@ $("#clearMedia").addEventListener("click", ()=>{
 /* ========= Drag / Resize System ========= */
 
 function select(el){
-  // Clear previous selection
-  if(selected && selected!==el){ 
+  // Clear previous selection completely
+  if(selected && selected !== el){ 
     selected.classList.remove("selected"); 
-    $$(selected.querySelectorAll(".resize-handle")).forEach(h=>h.remove());
+    // Remove all resize handles
+    const handles = selected.querySelectorAll(".resize-handle");
+    handles.forEach(h => h.remove());
   }
+  
+  // Set new selection
   selected = el;
   
   // Update status display
@@ -1828,63 +1832,28 @@ function select(el){
   // Add selection styling
   selected.classList.add("selected");
   
-  // Add resize handles for all elements
+  // Add resize handles only if they don't exist
   if(!selected.querySelector(".resize-handle")){
     const handles = ['nw','n','ne','w','e','sw','s','se'];
     handles.forEach(pos=>{
       const h = document.createElement("div");
       h.className = `resize-handle ${pos}`;
       h.dataset.resize = pos;
+      h.style.pointerEvents = "auto"; // Ensure handles are clickable
       selected.appendChild(h);
     });
   }
+  
+  // Force a small delay to ensure handles are properly added
+  setTimeout(() => {
+    if(selected) {
+      selected.style.zIndex = "100"; // Bring selected element to front
+    }
+  }, 10);
 }
 
 /* ========= Drag / Resize System ========= */
 let selected = null, dragOff=[0,0], resizeMode=null, resizeStart={w:0,h:0,x:0,y:0}, isDragging=false;
-
-function select(el){
-  // Clear previous selection
-  if(selected && selected!==el){ 
-    selected.classList.remove("selected"); 
-    $$(selected.querySelectorAll(".resize-handle")).forEach(h=>h.remove());
-  }
-  selected = el;
-  
-  // Update status display
-  const statusEl = $("#selectionStatus");
-  if(!selected) {
-    statusEl.textContent = ids.uiLang.value === "bn" ? "কিছু নির্বাচিত নয়" : "Nothing selected";
-    return;
-  }
-  
-  // Show what's selected
-  let name = "Unknown";
-  if(selected.id === "header") name = ids.uiLang.value === "bn" ? "হেডার" : "Header";
-  else if(selected.id === "footer") name = ids.uiLang.value === "bn" ? "ফুটার" : "Footer"; 
-  else if(selected.id === "candidateBox") name = ids.uiLang.value === "bn" ? "প্রার্থী" : "Candidate";
-  else if(selected.id === "sloganBox") name = ids.uiLang.value === "bn" ? "স্লোগান" : "Slogan";
-  else if(selected.id === "ribbon") name = ids.uiLang.value === "bn" ? "ফিতা" : "Ribbon";
-  else if(selected.contentEditable === "true") name = ids.uiLang.value === "bn" ? "টেক্সট" : "Text";
-  else if(selected.tagName === "IMG") name = ids.uiLang.value === "bn" ? "ছবি" : "Image";
-  else name = ids.uiLang.value === "bn" ? "আকৃতি" : "Shape";
-  
-  statusEl.textContent = (ids.uiLang.value === "bn" ? "নির্বাচিত: " : "Selected: ") + name;
-  
-  // Add selection styling
-  selected.classList.add("selected");
-  
-  // Add resize handles for all elements
-  if(!selected.querySelector(".resize-handle")){
-    const handles = ['nw','n','ne','w','e','sw','s','se'];
-    handles.forEach(pos=>{
-      const h = document.createElement("div");
-      h.className = `resize-handle ${pos}`;
-      h.dataset.resize = pos;
-      selected.appendChild(h);
-    });
-  }
-}
 
 function makeDraggable(el){
   if(!el) return;
@@ -1894,6 +1863,8 @@ function makeDraggable(el){
 
 function dragMove(e){
   if(!selected || resizeMode || !isDragging) return;
+  
+  e.preventDefault();
   const pr = poster.getBoundingClientRect();
   let x = e.clientX - pr.left - dragOff[0];
   let y = e.clientY - pr.top - dragOff[1];
@@ -1906,16 +1877,25 @@ function dragMove(e){
   selected.style.top = y + "px";
 }
 
-function dragEnd(){ 
+function dragEnd(e){ 
+  // Clean up all event listeners
   window.removeEventListener("mousemove", dragMove);
   window.removeEventListener("mousemove", resizeMove);
+  
+  // Reset states
   isDragging = false;
   resizeMode = null;
+  
+  // Save state after drag/resize operation
+  if(selected) {
+    saveState();
+  }
 }
 
 function resizeMove(e){
   if(!selected || !resizeMode) return;
   
+  e.preventDefault();
   const pr = poster.getBoundingClientRect();
   const dx = e.clientX - resizeStart.mx;
   const dy = e.clientY - resizeStart.my;
@@ -1959,17 +1939,27 @@ function resizeMove(e){
   makeDraggable(el);
 });
 
-// Use event delegation for all poster interactions
+
+
+// Enhanced event delegation for all poster interactions
 poster.addEventListener("mousedown", e=>{
-  const clickedElement = e.target.closest(".draggable");
+  
+  // Prevent default to avoid text selection issues
+  if(!e.target.contentEditable || e.target.contentEditable === "false") {
+    e.preventDefault();
+  }
+  
+  // Find the clickable element - check for specific IDs and draggable class
+  const clickedElement = e.target.closest(".draggable, #header, #footer, #candidateBox, #sloganBox, #ribbon") || 
+                         (e.target.dataset.draggable === "true" ? e.target : null) ||
+                         (e.target.contentEditable === "true" ? e.target : null);
+
   
   // Handle resize
   if(e.target.classList.contains("resize-handle")){
-    e.preventDefault();
     e.stopPropagation();
-    const el = e.target.closest(".draggable");
-    if(el) {
-      select(el);
+    const el = e.target.closest(".draggable, #header, #footer, #candidateBox, #sloganBox, #ribbon");
+    if(el && el === selected) {
       resizeMode = e.target.dataset.resize;
       const rect = el.getBoundingClientRect();
       const pr = poster.getBoundingClientRect();
@@ -1993,24 +1983,32 @@ poster.addEventListener("mousedown", e=>{
     return;
   }
   
-  // Always select the clicked element, even if it's already selected
+  // Select the clicked element
   select(clickedElement);
   
   // Handle content editing for text elements
   if(clickedElement.contentEditable === "true" && e.detail === 1 && !e.ctrlKey && !e.metaKey){
-    // Single click for selection, double-click for editing
+    // Allow text editing on double click
     return;
   }
   
-  // Start dragging
-  e.preventDefault();
-  e.stopPropagation();
-  isDragging = true;
-  const rect = clickedElement.getBoundingClientRect();
-  const pr = poster.getBoundingClientRect();
-  dragOff = [e.clientX - rect.left, e.clientY - rect.top];
-  window.addEventListener("mousemove", dragMove);
-  window.addEventListener("mouseup", dragEnd, {once:true});
+  // Start dragging only if we have a valid selection
+  if(selected) {
+    isDragging = true;
+    const rect = selected.getBoundingClientRect();
+    const pr = poster.getBoundingClientRect();
+    dragOff = [e.clientX - rect.left, e.clientY - rect.top];
+    window.addEventListener("mousemove", dragMove);
+    window.addEventListener("mouseup", dragEnd, {once:true});
+  }
+});
+
+// Clear selection when clicking outside poster
+document.addEventListener("mousedown", e=>{
+  // If click is outside the poster area and not in the panel, clear selection
+  if(!poster.contains(e.target) && !e.target.closest('.panel') && !e.target.closest('.toolbar')){
+    select(null);
+  }
 });
 
 // Prevent context menu on resize handles
@@ -2020,13 +2018,21 @@ poster.addEventListener("contextmenu", e=>{
 
 // Keyboard shortcuts
 document.addEventListener("keydown", e=>{
+  // ESC key to clear selection (works globally)
+  if(e.key === "Escape"){
+    e.preventDefault();
+    select(null);
+    return;
+  }
+  
   if(!selected) return;
   
   // Delete selected element (but not core elements)
   if(e.key === "Delete" || e.key === "Backspace"){
     if(!["header","footer","candidateBox","sloganBox","ribbon"].includes(selected.id)){
       selected.remove();
-      selected = null;
+      select(null);
+      saveState();
       e.preventDefault();
     }
   }
