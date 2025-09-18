@@ -71,7 +71,176 @@
     }
   }
   .panel h2{ font-size:16px; margin:10px 0; letter-spacing:.3px }
+  
+  /* Collapsible Sections */
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 8px;
+    user-select: none;
+  }
+  
+  .section-header h2 {
+    margin: 0;
+    flex: 1;
+  }
+  
+  .section-toggle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--muted);
+    transition: all 0.2s ease;
+  }
+  
+  .section-header:hover .section-toggle {
+    background: var(--brand);
+    color: white;
+  }
+  
+  .section-content {
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.2s ease;
+    max-height: 1000px;
+    opacity: 1;
+  }
+  
+  .section-content.collapsed {
+    max-height: 0;
+    opacity: 0;
+    margin: 0;
+  }
+  
+  .section-toggle.collapsed::after {
+    content: '+';
+  }
+  
+  .section-toggle:not(.collapsed)::after {
+    content: '−';
+  }
+  
+  /* Section Categories */
+  .section-category {
+    background: linear-gradient(135deg, #f8f9ff 0%, #e3f2fd 100%);
+    border-radius: 12px;
+    margin: 12px 0;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  
+  .section-category.essential .section-header {
+    background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+    color: white;
+    margin: 0;
+    padding: 12px 16px;
+  }
+  
+  .section-category.styling .section-header {
+    background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+    color: white;
+    margin: 0;
+    padding: 12px 16px;
+  }
+  
+  .section-category.advanced .section-header {
+    background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+    color: white;
+    margin: 0;
+    padding: 12px 16px;
+  }
+  
+  .section-category.actions .section-header {
+    background: linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%);
+    color: white;
+    margin: 0;
+    padding: 12px 16px;
+  }
+  
+  .section-category .section-content {
+    padding: 16px;
+  }
+  
   .group{ border:1px solid var(--line); border-radius:10px; padding:10px; margin:8px 0; background:#fbfcff }
+  
+  /* Enhanced Visual Hierarchy */
+  .group h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--brand);
+    margin: 0 0 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .section-divider {
+    border-top: 2px solid var(--line);
+    margin: 20px 0 15px 0;
+    position: relative;
+  }
+  
+  .section-divider::after {
+    content: attr(data-title);
+    position: absolute;
+    top: -10px;
+    left: 12px;
+    background: white;
+    padding: 0 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  /* Quick Action Buttons */
+  .quick-actions {
+    background: linear-gradient(135deg, #f8f9ff 0%, #e3f2fd 100%);
+    border: 1px solid var(--brand);
+    border-radius: 12px;
+    padding: 12px;
+    margin: 12px 0;
+  }
+  
+  .quick-actions h3 {
+    color: var(--brand);
+    margin-bottom: 10px;
+  }
+  
+  /* Chips reorganization */
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 8px 0;
+    max-height: 120px;
+    overflow-y: auto;
+    padding: 4px;
+  }
+  
+  .chips::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  .chips::-webkit-scrollbar-track {
+    background: var(--line);
+    border-radius: 2px;
+  }
+  
+  .chips::-webkit-scrollbar-thumb {
+    background: var(--brand);
+    border-radius: 2px;
+  }
   .row{ display:flex; gap:10px; align-items:center; margin:8px 0; flex-wrap:wrap }
   .row label{ font-size:12px; color:var(--muted); min-width:120px }
   .row input[type="text"], .row select{
@@ -599,18 +768,18 @@
       </div>
     </div>
 
-    <h2 data-i18n="content">বিষয়বস্তু</h2>
+    <h2 data-i18n="content">📝 বিষয়বস্তু</h2>
     <div class="group">
       <div class="row"><label data-i18n="party">দল</label><input type="text" id="party" placeholder="দলের নাম" value="দলের নাম" /></div>
-      <div class="row"><label data-i18n="election">নির্বাচন</label><input type="text" id="election" placeholder="জাতীয় নির্বাচন ২০২৬" value="জাতীয় নির্বাচন ২০২৬" /></div>
       <div class="row"><label data-i18n="candidate">প্রার্থী</label><input type="text" id="candidate" placeholder="প্রার্থীর নাম" value="প্রার্থীর নাম" /></div>
+      <div class="row"><label data-i18n="election">নির্বাচন</label><input type="text" id="election" placeholder="জাতীয় নির্বাচন ২০২৬" value="জাতীয় নির্বাচন ২০২৬" /></div>
       <div class="row"><label data-i18n="role">পদ/আসন</label><input type="text" id="role" placeholder="নির্বাচনী এলাকা • ঢাকা-১" value="নির্বাচনী এলাকা • ঢাকা-১" /></div>
       <div class="row"><label data-i18n="slogan">স্লোগান</label><input type="text" id="slogan" placeholder="অগ্রগতি • স্থিতিশীলতা • সমৃদ্ধি" value="অগ্রগতি • স্থিতিশীলতা • সমৃদ্ধি" /></div>
       <div class="row"><label data-i18n="ribbonText">রিবন টেক্সট</label><input type="text" id="ribbonText" placeholder="বাংলাদেশ ২০২৬" value="বাংলাদেশ ২০২৬" /></div>
       <div class="row"><label data-i18n="hashtag">হ্যাশট্যাগ</label><input type="text" id="hashtag" placeholder="#ভোট২০২৬" value="#ভোট২০২৬" /></div>
     </div>
 
-    <h2 data-i18n="media">মিডিয়া</h2>
+    <h2 data-i18n="media">🖼️ মিডিয়া</h2>
     <div class="group">
       <div class="row"><label data-i18n="partyLogo">দলের লোগো</label><input type="file" id="logo" accept="image/*" /></div>
       <div class="row"><label data-i18n="candidatePhoto">প্রার্থীর ছবি</label><input type="file" id="photo" accept="image/*" /></div>
@@ -618,7 +787,25 @@
       <div class="row"><button class="btn" id="clearMedia" type="button" data-i18n="clearMedia">মিডিয়া মুছুন</button></div>
     </div>
 
-    <h2 data-i18n="elements">উপাদান</h2>
+    <div class="section-divider" data-title="দ্রুত প্রিসেট"></div>
+    
+    <div class="quick-actions">
+      <h3 data-i18n="presets">🎯 প্রিসেট</h3>
+      <div class="chips" id="presets">
+        <span class="chip" data-preset="ncp">জাতীয় নাগরিক পার্টি (NCP)</span>
+        <span class="chip" data-preset="bnp">বিএনপি</span>
+        <span class="chip" data-preset="jatiya">জাতীয় পার্টি</span>
+        <span class="chip" data-preset="jamaat">জামায়াত</span>
+        <span class="chip" data-preset="mayoral">মেয়র</span>
+        <span class="chip" data-preset="parliament">সংসদ</span>
+        <span class="chip" data-preset="local">স্থানীয়</span>
+        <span class="chip" data-preset="youth">যুব</span>
+        <span class="chip" data-preset="women">নারী</span>
+        <span class="chip" data-preset="professional">পেশাদার</span>
+      </div>
+    </div>
+
+    <div class="section-divider" data-title="স্টাইলিং অপশন"></div>
     <div class="group">
       <div class="row" style="gap:6px">
         <button class="btn" id="addText" type="button" data-i18n="addText">টেক্সট যোগ করুন</button>
@@ -632,7 +819,7 @@
       </div>
     </div>
 
-    <h2 data-i18n="textFormat">টেক্সট ফরম্যাট</h2>
+    <h2 data-i18n="textFormat">🔤 টেক্সট ফরম্যাট</h2>
     <div class="group">
       <div class="row">
         <label data-i18n="fontFamily">ফন্ট</label>
@@ -655,7 +842,7 @@
       </div>
     </div>
 
-    <h2 data-i18n="templates">টেমপ্লেট</h2>
+    <h2 data-i18n="templates">🎨 টেমপ্লেট</h2>
     <div class="group">
       <div class="chips" id="templates">
         <span class="chip active" data-tpl="banner">ব্যানার</span>
@@ -678,22 +865,6 @@
         <span class="chip" data-tpl="curved">বক্র</span>
         <span class="chip" data-tpl="monochrome">একরঙা</span>
         <span class="chip" data-tpl="formal">আনুষ্ঠানিক</span>
-      </div>
-    </div>
-
-    <h2 data-i18n="presets">প্রিসেট</h2>
-    <div class="group">
-      <div class="chips" id="presets">
-        <span class="chip" data-preset="ncp">জাতীয় নাগরিক পার্টি (NCP)</span>
-        <span class="chip" data-preset="bnp">বিএনপি</span>
-        <span class="chip" data-preset="jatiya">জাতীয় পার্টি</span>
-        <span class="chip" data-preset="jamaat">জামায়াত</span>
-        <span class="chip" data-preset="mayoral">মেয়র</span>
-        <span class="chip" data-preset="parliament">সংসদ</span>
-        <span class="chip" data-preset="local">স্থানীয়</span>
-        <span class="chip" data-preset="youth">যুব</span>
-        <span class="chip" data-preset="women">নারী</span>
-        <span class="chip" data-preset="professional">পেশাদার</span>
       </div>
     </div>
 
@@ -753,7 +924,7 @@
       </div>
     </div>
 
-    <h2 data-i18n="export">এক্সপোর্ট</h2>
+    <h2 data-i18n="export">📤 এক্সপোর্ট</h2>
     <div class="group">
       <div class="row" style="gap:6px">
         <button class="btn primary block" id="exportPNG" type="button" data-i18n="exportPNG">PNG এক্সপোর্ট</button>
@@ -764,7 +935,7 @@
       <div class="row"><span class="status" id="status">প্রস্তুত।</span></div>
     </div>
 
-    <h2 data-i18n="project">প্রকল্প</h2>
+    <h2 data-i18n="project">💾 প্রকল্প</h2>
     <div class="group">
       <div class="row" style="gap:6px">
         <button class="btn block" id="saveProject" type="button" data-i18n="saveProject">প্রকল্প সংরক্ষণ</button>
@@ -907,6 +1078,42 @@ const ids = {
       
       if (toggleBtn) toggleBtn.addEventListener('click', toggleMobilePanel);
       if (closeBtn) closeBtn.addEventListener('click', closeMobilePanel);
+    });
+
+    // Collapsible Section Functionality
+    function toggleSection(headerElement) {
+      const content = headerElement.nextElementSibling;
+      const toggle = headerElement.querySelector('.section-toggle');
+      
+      if (content.classList.contains('collapsed')) {
+        content.classList.remove('collapsed');
+        toggle.classList.remove('collapsed');
+        // Save state to localStorage
+        localStorage.setItem('section_' + headerElement.textContent.trim(), 'open');
+      } else {
+        content.classList.add('collapsed');
+        toggle.classList.add('collapsed');
+        // Save state to localStorage
+        localStorage.setItem('section_' + headerElement.textContent.trim(), 'closed');
+      }
+    }
+
+    // Restore section states on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.section-header').forEach(header => {
+        const sectionKey = 'section_' + header.textContent.trim();
+        const state = localStorage.getItem(sectionKey);
+        const content = header.nextElementSibling;
+        const toggle = header.querySelector('.section-toggle');
+        
+        if (state === 'closed') {
+          content.classList.add('collapsed');
+          toggle.classList.add('collapsed');
+        } else if (state === 'open') {
+          content.classList.remove('collapsed');
+          toggle.classList.remove('collapsed');
+        }
+      });
     });
 
     function setStatus(msg){ ids.status.textContent=msg; setTimeout(()=>ids.status.textContent=(ids.uiLang.value==="bn"?"প্রস্তুত।":"Ready."), 2000); }/* ========= Size / Zoom ========= */
