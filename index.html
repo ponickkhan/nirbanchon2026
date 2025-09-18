@@ -78,6 +78,50 @@
   .candidate .name{ font-size:48px; font-weight:900; line-height:.95 }
   .candidate .role{ font-size:18px; opacity:.85 }
 
+  /* Traditional poster styles */
+  .traditional-banner{ 
+    position:absolute; left:16px; right:16px; top:12px; 
+    background:#000; color:#fff; padding:12px; text-align:center; 
+    border-radius:8px; font-weight:800; font-size:14px;
+    transform: perspective(600px) rotateX(2deg);
+  }
+  .curved-element{
+    position:absolute;
+    border-radius:50%;
+    background:linear-gradient(45deg, var(--brand), var(--accent));
+  }
+  .formal-border{
+    border: 3px solid #000;
+    border-radius: 15px;
+    box-shadow: inset 0 0 0 3px #fff, 0 0 0 1px #000;
+  }
+
+  /* Header shape variations */
+  .header-wave {
+    clip-path: polygon(0 0, 100% 0, 100% 75%, 0 100%);
+  }
+  .header-curve-bottom {
+    clip-path: ellipse(100% 85% at 50% 0%);
+  }
+  .header-arch {
+    clip-path: polygon(0 0, 100% 0, 100% 60%, 50% 100%, 0 60%);
+  }
+  .header-diagonal {
+    clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+  }
+  .header-rounded {
+    border-radius: 0 0 50px 50px;
+  }
+  .header-scoop {
+    clip-path: polygon(0 0, 100% 0, 100% 80%, 50% 100%, 0 80%);
+  }
+  .header-mountains {
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 80% 100%, 60% 80%, 40% 100%, 20% 80%, 0 100%);
+  }
+  .header-triangle {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+  }
+
   .slogan{
     position:absolute; left:32px; right:32px; bottom:76px;
     background:#ffffffea; border-radius:12px; padding:10px 14px;
@@ -138,6 +182,8 @@
         <span class="chip" data-pal="civic">Civic</span>
         <span class="chip" data-pal="youth">Youth</span>
         <span class="chip active" data-pal="classic">Classic</span>
+        <span class="chip" data-pal="monochrome">Monochrome</span>
+        <span class="chip" data-pal="traditional">Traditional</span>
       </div>
     </div>
 
@@ -192,6 +238,25 @@
         <span class="chip" data-tpl="diamond">হীরক</span>
         <span class="chip" data-tpl="modern">আধুনিক</span>
         <span class="chip" data-tpl="elegant">মার্জিত</span>
+        <span class="chip" data-tpl="traditional">ঐতিহ্যবাহী</span>
+        <span class="chip" data-tpl="curved">বক্র</span>
+        <span class="chip" data-tpl="monochrome">একরঙা</span>
+        <span class="chip" data-tpl="formal">আনুষ্ঠানিক</span>
+      </div>
+    </div>
+
+    <h2 data-i18n="headerShape">হেডার আকৃতি</h2>
+    <div class="group">
+      <div class="chips" id="headerShapes">
+        <span class="chip active" data-shape="default">সাধারণ</span>
+        <span class="chip" data-shape="wave">তরঙ্গ</span>
+        <span class="chip" data-shape="curve-bottom">বক্র</span>
+        <span class="chip" data-shape="arch">খিলান</span>
+        <span class="chip" data-shape="diagonal">তির্যক</span>
+        <span class="chip" data-shape="rounded">গোলাকার</span>
+        <span class="chip" data-shape="scoop">স্কুপ</span>
+        <span class="chip" data-shape="mountains">পাহাড়</span>
+        <span class="chip" data-shape="triangle">ত্রিভুজ</span>
       </div>
     </div>
 
@@ -310,10 +375,12 @@ $("#palette").addEventListener("click", e=>{
   $$("#palette .chip").forEach(c=>c.classList.remove("active"));
   chip.classList.add("active");
   const sets = {
-    flag:     ["#006a4e","#da291c","#ffc300","#11131a"],
-    civic:    ["#1d3557","#457b9d","#e63946","#11131a"],
-    youth:    ["#0ea5e9","#22c55e","#a855f7","#0f172a"],
-    classic:  ["#0b3d2e","#1e847f","#eec643","#222222"],
+    flag:        ["#006a4e","#da291c","#ffc300","#11131a"],
+    civic:       ["#1d3557","#457b9d","#e63946","#11131a"],
+    youth:       ["#0ea5e9","#22c55e","#a855f7","#0f172a"],
+    classic:     ["#0b3d2e","#1e847f","#eec643","#222222"],
+    monochrome:  ["#000000","#333333","#666666","#ffffff"],
+    traditional: ["#8b0000","#000000","#ffd700","#ffffff"],
   };
   const [p,s,a,t] = sets[chip.dataset.pal] || sets.flag;
   ids.cPrimary.value=p; ids.cSecondary.value=s; ids.cAccent.value=a; ids.cText.value=t;
@@ -409,7 +476,16 @@ function setTemplateOverlay(name){
     modern:   `radial-gradient(ellipse 80% 50% at 50% 0%, ${p}20, transparent),
                linear-gradient(180deg, transparent 60%, ${s}12 100%)`,
     elegant:  `linear-gradient(135deg, ${p}05 0%, transparent 25%, ${s}08 50%, transparent 75%, ${a}05 100%),
-               radial-gradient(circle at 80% 20%, ${p}12, transparent 40%)`
+               radial-gradient(circle at 80% 20%, ${p}12, transparent 40%)`,
+    traditional: `linear-gradient(180deg, ${p}15 0%, transparent 30%),
+                  radial-gradient(ellipse 120% 40% at 50% 100%, ${s}12, transparent),
+                  linear-gradient(0deg, ${p}08 0%, transparent 20%)`,
+    curved:   `radial-gradient(ellipse 150% 60% at 50% 0%, ${p}18, transparent),
+               radial-gradient(ellipse 120% 50% at 0% 100%, ${s}15, transparent),
+               radial-gradient(ellipse 120% 50% at 100% 100%, ${a}12, transparent)`,
+    monochrome: `linear-gradient(45deg, ${p}20 0%, transparent 30%, ${s}15 70%, transparent 100%)`,
+    formal:   `linear-gradient(180deg, ${p}12 0%, transparent 25%, transparent 75%, ${s}10 100%),
+               radial-gradient(circle at 25% 25%, ${a}08, transparent 50%)`
   };
   BG_OVERLAY = (overlays[name] || "").replace(/\s+/g,' ').trim();
 }
@@ -417,6 +493,23 @@ function applyBG(){
   // if overlay present, it should be top-most (first)
   ids.bg.style.background = BG_OVERLAY ? `${BG_OVERLAY}, ${BG_BASE}` : BG_BASE;
 }
+
+/* ========= Header Shapes ========= */
+$("#headerShapes").addEventListener("click", e=>{
+  const chip = e.target.closest(".chip"); if(!chip) return;
+  $$("#headerShapes .chip").forEach(c=>c.classList.remove("active"));
+  chip.classList.add("active");
+  const shape = chip.dataset.shape;
+  
+  // Remove all header shape classes
+  const shapeClasses = ["header-wave", "header-curve-bottom", "header-arch", "header-diagonal", "header-rounded", "header-scoop", "header-mountains", "header-triangle"];
+  shapeClasses.forEach(cls => ids.header.classList.remove(cls));
+  
+  // Apply new shape class
+  if(shape !== "default") {
+    ids.header.classList.add(`header-${shape}`);
+  }
+});
 
 /* ========= Templates ========= */
 $("#templates").addEventListener("click", e=>{
@@ -452,11 +545,42 @@ $("#templates").addEventListener("click", e=>{
     $("#header").style.height = "29%";
     $("#candidateBox").style.bottom = "215px";
     $("#sloganBox").style.bottom = "74px";
+  } else if(tpl==="traditional" || tpl==="formal"){
+    $("#header").style.height = "26%";
+    $("#candidateBox").style.bottom = "200px";
+    $("#sloganBox").style.bottom = "65px";
+  } else if(tpl==="curved"){
+    $("#header").style.height = "33%";
+    $("#candidateBox").style.bottom = "235px";
+    $("#sloganBox").style.bottom = "85px";
+  } else if(tpl==="monochrome"){
+    $("#header").style.height = "28%";
+    $("#candidateBox").style.bottom = "210px";
+    $("#sloganBox").style.bottom = "70px";
   }
 
   setTemplateOverlay(tpl);
   randomRibbon();
   applyBG();
+  
+  // Apply special styling for certain templates
+  if(tpl === "traditional" || tpl === "formal"){
+    poster.classList.add("formal-border");
+    // Make text more bold and formal
+    ids.candidateName.style.fontWeight = "900";
+    ids.candidateName.style.textShadow = "2px 2px 4px rgba(0,0,0,0.3)";
+  } else {
+    poster.classList.remove("formal-border");
+    ids.candidateName.style.fontWeight = "900";
+    ids.candidateName.style.textShadow = "";
+  }
+  
+  // Special handling for monochrome template
+  if(tpl === "monochrome"){
+    ids.candidateName.style.color = "#000";
+    ids.roleText.style.color = "#333";
+    ids.sloganText.style.color = "#000";
+  }
 });
 
 /* ========= Ribbon random styles ========= */
@@ -611,6 +735,13 @@ $("#resetLayout").addEventListener("click", ()=>{
   $("#candidateBox").style.left="32px"; $("#candidateBox").style.bottom="220px"; $("#candidateBox").style.top=""; $("#candidateBox").style.right="";
   $("#sloganBox").style.left="32px"; $("#sloganBox").style.right="32px"; $("#sloganBox").style.bottom="76px";
   $("#footer").style.left="0"; $("#footer").style.right="0"; $("#footer").style.bottom="0";
+  
+  // Reset header shape
+  const shapeClasses = ["header-wave", "header-curve-bottom", "header-arch", "header-diagonal", "header-rounded", "header-scoop", "header-mountains", "header-triangle"];
+  shapeClasses.forEach(cls => ids.header.classList.remove(cls));
+  $$("#headerShapes .chip").forEach(c=>c.classList.remove("active"));
+  $("#headerShapes .chip[data-shape='default']").classList.add("active");
+  
   randomRibbon();
   buildBaseBG(); applyBG();
   select(null);
@@ -624,7 +755,7 @@ const I18N = {
     content:"Content", party:"Party", election:"Election", candidate:"Candidate", role:"Role", slogan:"Slogan",
     hashtag:"Hashtag", media:"Media", partyLogo:"Party Logo", candidatePhoto:"Candidate Photo", symbol:"Symbol",
     clearMedia:"Clear media", elements:"Elements", addText:"Add Text", addShape:"Add Shape", addImage:"Add Image",
-    bringFront:"Bring Front", sendBack:"Send Back", delete:"Delete", templates:"Templates",
+    bringFront:"Bring Front", sendBack:"Send Back", delete:"Delete", templates:"Templates", headerShape:"Header Shape",
     export:"Export", exportPNG:"Export PNG", exportPDF:"Export PDF", resetLayout:"Reset Layout", print:"Print",
     placeholders:{ party:"Party Name", election:"National Election 2026", candidate:"Candidate Name", role:"Constituency • Dhaka-1", slogan:"Progress • Stability • Prosperity", hashtag:"#Vote2026" },
     defaults:{ party:"Party Name", election:"National Election 2026", candidate:"Candidate Name", role:"Constituency • Dhaka-1", slogan:"Progress • Stability • Prosperity", hashtag:"#Vote2026", ribbon:"BANGLADESH 2026", footer:"Election Commission Compliant Layout" }
@@ -634,7 +765,7 @@ const I18N = {
     content:"বিষয়বস্তু", party:"দল", election:"নির্বাচন", candidate:"প্রার্থী", role:"পদ/আসন", slogan:"স্লোগান",
     hashtag:"হ্যাশট্যাগ", media:"মিডিয়া", partyLogo:"দলের লোগো", candidatePhoto:"প্রার্থীর ছবি", symbol:"প্রতীক",
     clearMedia:"মিডিয়া মুছুন", elements:"উপাদান", addText:"টেক্সট যোগ করুন", addShape:"আকৃতি যোগ করুন", addImage:"ছবি যোগ করুন",
-    bringFront:"সামনে আনুন", sendBack:"পেছনে পাঠান", delete:"মুছুন", templates:"টেমপ্লেট",
+    bringFront:"সামনে আনুন", sendBack:"পেছনে পাঠান", delete:"মুছুন", templates:"টেমপ্লেট", headerShape:"হেডার আকৃতি",
     export:"এক্সপোর্ট", exportPNG:"PNG এক্সপোর্ট", exportPDF:"PDF এক্সপোর্ট", resetLayout:"লেআউট রিসেট", print:"প্রিন্ট",
     placeholders:{ party:"দলের নাম", election:"জাতীয় নির্বাচন ২০২৬", candidate:"প্রার্থীর নাম", role:"নির্বাচনী এলাকা • ঢাকা-১", slogan:"অগ্রগতি • স্থিতিশীলতা • সমৃদ্ধি", hashtag:"#ভোট২০২৬" },
     defaults:{ party:"দলের নাম", election:"জাতীয় নির্বাচন ২০২৬", candidate:"প্রার্থীর নাম", role:"নির্বাচনী এলাকা • ঢাকা-১", slogan:"অগ্রগতি • স্থিতিশীলতা • সমৃদ্ধি", hashtag:"#ভোট২০২৬", ribbon:"বাংলাদেশ ২০২৬", footer:"নির্বাচন কমিশন অনুবর্তী লেআউট" }
