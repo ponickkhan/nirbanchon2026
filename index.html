@@ -31,11 +31,13 @@
     flex:1 1 180px; min-width:180px; padding:10px 12px; border:1px solid var(--line); border-radius:10px; font-family:var(--bangla);
   }
   .row input[type="file"]{ flex:1 1 180px }
+  .row input[type="range"]{ flex:1; min-width:120px }
   .row .mini{ width:110px }
   .btn{ appearance:none; border:1px solid var(--line); background:#fff; padding:10px 12px; border-radius:10px; font-weight:700; cursor:pointer; font-family:var(--bangla) }
   .btn.primary{ background:var(--brand); color:#fff; border-color:var(--brand) }
   .btn.warn{ background:var(--accent); color:#fff; border-color:var(--accent) }
   .btn.block{ display:block; width:100% }
+  .btn:disabled{ opacity:0.5; cursor:not-allowed }
   .chips{ display:flex; flex-wrap:wrap; gap:6px }
   .chip{ padding:8px 10px; border:1px solid var(--line); border-radius:999px; cursor:pointer; font-size:12px; background:#fff; user-select:none }
   .chip.active{ background:#e8f5f2; border-color:#b6e1d9; }
@@ -122,6 +124,96 @@
     clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
   }
 
+  /* Ribbon style variations */
+  .ribbon-classic {
+    right: -60px; top: 70px; transform: rotate(38deg);
+    padding: 8px 120px; border-radius: 0;
+  }
+  .ribbon-banner {
+    right: 20px; top: 50px; transform: rotate(0deg);
+    padding: 12px 24px; border-radius: 8px;
+    clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 50%, calc(100% - 15px) 100%, 0 100%, 15px 50%);
+  }
+  .ribbon-corner {
+    right: 0px; top: 0px; transform: rotate(0deg);
+    padding: 16px 20px 8px 24px; border-radius: 0 0 0 15px;
+    clip-path: polygon(0 0, 100% 0, 100% 80%, 80% 100%, 0 100%);
+  }
+  .ribbon-curved {
+    right: 10px; top: 60px; transform: rotate(-15deg);
+    padding: 10px 32px; border-radius: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  .ribbon-badge {
+    right: 30px; top: 40px; transform: rotate(0deg);
+    padding: 8px 16px; border-radius: 50px;
+    border: 3px solid rgba(255,255,255,0.8);
+    font-size: 12px; font-weight: 900;
+  }
+  .ribbon-stamp {
+    right: 25px; top: 45px; transform: rotate(-8deg);
+    padding: 12px 20px; border-radius: 0;
+    border: 4px dashed rgba(255,255,255,0.9);
+    font-family: 'Courier New', monospace; font-weight: 800;
+  }
+  .ribbon-hidden {
+    display: none !important;
+  }
+
+  /* Ribbon positioning */
+  .ribbon-pos-top-left { right: auto; left: -60px; top: 70px; transform: rotate(-38deg); }
+  .ribbon-pos-center { right: auto; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(0deg); }
+  .ribbon-pos-bottom-right { top: auto; bottom: 120px; right: -60px; transform: rotate(38deg); }
+  .ribbon-pos-bottom-left { right: auto; left: -60px; top: auto; bottom: 120px; transform: rotate(-38deg); }
+
+  /* Layout modes */
+  .layout-swapped .header { top: auto; bottom: 0; }
+  .layout-swapped .footer { bottom: auto; top: 0; }
+  .layout-swapped .candidate { top: 220px; bottom: auto; }
+  .layout-swapped .slogan { top: 76px; bottom: auto; }
+  
+  .layout-inverted .header { top: auto; bottom: 0; }
+  .layout-inverted .footer { bottom: auto; top: 0; }
+  .layout-inverted .candidate { top: 220px; bottom: auto; }
+  .layout-inverted .slogan { top: 76px; bottom: auto; }
+  
+  .layout-centered .header { height: 20% !important; }
+  .layout-centered .footer { height: 20% !important; }
+  .layout-centered .candidate { top: 50%; bottom: auto; transform: translateY(-50%); }
+  .layout-centered .slogan { top: 60%; bottom: auto; }
+  
+  .layout-minimal-header .header { height: 15% !important; }
+  .layout-minimal-header .candidate { bottom: 180px; }
+  
+  .layout-minimal-footer .footer { height: 30px !important; font-size: 12px; }
+  .layout-minimal-footer .slogan { bottom: 45px; }
+
+  /* Footer shapes (inverted header shapes) */
+  .footer-wave {
+    clip-path: polygon(0 25%, 100% 0, 100% 100%, 0 100%);
+  }
+  .footer-curve-bottom {
+    clip-path: ellipse(100% 85% at 50% 100%);
+  }
+  .footer-arch {
+    clip-path: polygon(0 40%, 50% 0, 100% 40%, 100% 100%, 0 100%);
+  }
+  .footer-diagonal {
+    clip-path: polygon(0 0, 85% 0, 100% 100%, 0 100%);
+  }
+  .footer-rounded {
+    border-radius: 50px 50px 0 0;
+  }
+  .footer-scoop {
+    clip-path: polygon(0 20%, 50% 0, 100% 20%, 100% 100%, 0 100%);
+  }
+  .footer-mountains {
+    clip-path: polygon(0 0, 20% 20%, 40% 0, 60% 20%, 80% 0, 100% 30%, 100% 100%, 0 100%);
+  }
+  .footer-triangle {
+    clip-path: polygon(0 0, 50% 20%, 100% 0, 100% 100%, 0 100%);
+  }
+
   .slogan{
     position:absolute; left:32px; right:32px; bottom:76px;
     background:#ffffffea; border-radius:12px; padding:10px 14px;
@@ -134,9 +226,45 @@
   .footer{ position:absolute; left:0; right:0; bottom:0; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; color:#fff; font-weight:700; min-height:56px }
   .badge{ background:#ffffff; color:#000; padding:6px 10px; border-radius:999px; font-size:12px; font-weight:800 }
 
-  .draggable{ position:absolute; cursor:move; user-select:none }
-  .selected{ outline:2px dashed #7c3aed; outline-offset:2px }
-  .handle{ position:absolute; width:12px; height:12px; background:#7c3aed; bottom:-6px; right:-6px; border-radius:2px; cursor:nwse-resize; }
+  .draggable{ position:absolute; cursor:move; user-select:none; transition: box-shadow 0.2s ease }
+  .draggable:hover{ 
+    box-shadow: 0 0 0 1px rgba(124,58,237,0.5);
+  }
+  .draggable.selected{ 
+    box-shadow: 0 0 0 2px #7c3aed, 0 0 0 4px rgba(124,58,237,0.2);
+    z-index: 1000;
+  }
+  .resize-handle{ 
+    position:absolute; width:12px; height:12px; background:#7c3aed; 
+    border:2px solid #fff; border-radius:3px; cursor:nwse-resize;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    opacity: 0.9;
+    transition: all 0.2s ease;
+  }
+  .resize-handle:hover{
+    transform: scale(1.2);
+    opacity: 1;
+    background: #8b5cf6;
+  }
+  .resize-handle.se{ bottom:-6px; right:-6px; }
+  .resize-handle.sw{ bottom:-6px; left:-6px; cursor:nesw-resize; }
+  .resize-handle.ne{ top:-6px; right:-6px; cursor:nesw-resize; }
+  .resize-handle.nw{ top:-6px; left:-6px; cursor:nwse-resize; }
+  .resize-handle.n{ top:-6px; left:50%; transform:translateX(-50%); cursor:ns-resize; }
+  .resize-handle.s{ bottom:-6px; left:50%; transform:translateX(-50%); cursor:ns-resize; }
+  .resize-handle.e{ right:-6px; top:50%; transform:translateY(-50%); cursor:ew-resize; }
+  .resize-handle.w{ left:-6px; top:50%; transform:translateY(-50%); cursor:ew-resize; }
+  
+  /* Visual indicators for different element types */
+  .draggable[contenteditable="true"]{ 
+    border: 1px dashed transparent;
+  }
+  .draggable[contenteditable="true"]:hover{
+    border-color: rgba(124,58,237,0.3);
+  }
+  .draggable[contenteditable="true"].selected{
+    border-color: #7c3aed;
+  }
 
   @media print{
     body{ background:#fff }
@@ -194,6 +322,7 @@
       <div class="row"><label data-i18n="candidate">প্রার্থী</label><input type="text" id="candidate" placeholder="প্রার্থীর নাম" value="প্রার্থীর নাম" /></div>
       <div class="row"><label data-i18n="role">পদ/আসন</label><input type="text" id="role" placeholder="নির্বাচনী এলাকা • ঢাকা-১" value="নির্বাচনী এলাকা • ঢাকা-১" /></div>
       <div class="row"><label data-i18n="slogan">স্লোগান</label><input type="text" id="slogan" placeholder="অগ্রগতি • স্থিতিশীলতা • সমৃদ্ধি" value="অগ্রগতি • স্থিতিশীলতা • সমৃদ্ধি" /></div>
+      <div class="row"><label data-i18n="ribbonText">রিবন টেক্সট</label><input type="text" id="ribbonText" placeholder="বাংলাদেশ ২০২৬" value="বাংলাদেশ ২০২৬" /></div>
       <div class="row"><label data-i18n="hashtag">হ্যাশট্যাগ</label><input type="text" id="hashtag" placeholder="#ভোট২০২৬" value="#ভোট২০২৬" /></div>
     </div>
 
@@ -216,6 +345,29 @@
         <button class="btn" id="bringFront" type="button" data-i18n="bringFront">সামনে আনুন</button>
         <button class="btn" id="sendBack" type="button" data-i18n="sendBack">পেছনে পাঠান</button>
         <button class="btn warn" id="deleteSel" type="button" data-i18n="delete">মুছুন</button>
+      </div>
+    </div>
+
+    <h2 data-i18n="textFormat">টেক্সট ফরম্যাট</h2>
+    <div class="group">
+      <div class="row">
+        <label data-i18n="fontFamily">ফন্ট</label>
+        <select id="fontFamily">
+          <option value="bangla">বাংলা (Noto Sans Bengali)</option>
+          <option value="latin">ইংরেজি (Poppins)</option>
+          <option value="traditional">ঐতিহ্যবাহী (SolaimanLipi)</option>
+          <option value="modern">আধুনিক (Roboto)</option>
+        </select>
+      </div>
+      <div class="row">
+        <label data-i18n="fontSize">আকার</label>
+        <input type="range" id="fontSize" min="12" max="72" value="24" class="mini">
+        <span id="fontSizeDisplay">24px</span>
+      </div>
+      <div class="row" style="gap:6px">
+        <button class="btn" id="boldText" type="button" data-i18n="bold">বোল্ড</button>
+        <button class="btn" id="italicText" type="button" data-i18n="italic">ইটালিক</button>
+        <button class="btn" id="underlineText" type="button" data-i18n="underline">আন্ডারলাইন</button>
       </div>
     </div>
 
@@ -245,6 +397,18 @@
       </div>
     </div>
 
+    <h2 data-i18n="presets">প্রিসেট</h2>
+    <div class="group">
+      <div class="chips" id="presets">
+        <span class="chip" data-preset="mayoral">মেয়র</span>
+        <span class="chip" data-preset="parliament">সংসদ</span>
+        <span class="chip" data-preset="local">স্থানীয়</span>
+        <span class="chip" data-preset="youth">যুব</span>
+        <span class="chip" data-preset="women">নারী</span>
+        <span class="chip" data-preset="professional">পেশাদার</span>
+      </div>
+    </div>
+
     <h2 data-i18n="headerShape">হেডার আকৃতি</h2>
     <div class="group">
       <div class="chips" id="headerShapes">
@@ -260,6 +424,47 @@
       </div>
     </div>
 
+    <h2 data-i18n="layoutSwap">লেআউট সোয়াপ</h2>
+    <div class="group">
+      <div class="row" style="gap:6px">
+        <button class="btn" id="swapHeaderFooter" type="button" data-i18n="swapHeaderFooter">হেডার ⇄ ফুটার</button>
+        <button class="btn" id="invertLayout" type="button" data-i18n="invertLayout">উল্টান</button>
+      </div>
+      <div class="row">
+        <label data-i18n="layoutMode">লেআউট মোড</label>
+        <select id="layoutMode">
+          <option value="normal" selected>স্বাভাবিক</option>
+          <option value="inverted">উল্টানো</option>
+          <option value="centered">কেন্দ্রীভূত</option>
+          <option value="minimal-header">ছোট হেডার</option>
+          <option value="minimal-footer">ছোট ফুটার</option>
+        </select>
+      </div>
+    </div>
+
+    <h2 data-i18n="ribbonStyle">রিবন স্টাইল</h2>
+    <div class="group">
+      <div class="chips" id="ribbonStyles">
+        <span class="chip active" data-ribbon="classic">ক্লাসিক</span>
+        <span class="chip" data-ribbon="banner">ব্যানার</span>
+        <span class="chip" data-ribbon="corner">কোণার</span>
+        <span class="chip" data-ribbon="curved">বক্র</span>
+        <span class="chip" data-ribbon="badge">ব্যাজ</span>
+        <span class="chip" data-ribbon="stamp">স্ট্যাম্প</span>
+        <span class="chip" data-ribbon="none">লুকান</span>
+      </div>
+      <div class="row">
+        <label data-i18n="ribbonPosition">অবস্থান</label>
+        <select id="ribbonPosition">
+          <option value="top-right" selected>উপরে ডানে</option>
+          <option value="top-left">উপরে বামে</option>
+          <option value="center">মাঝখানে</option>
+          <option value="bottom-right">নিচে ডানে</option>
+          <option value="bottom-left">নিচে বামে</option>
+        </select>
+      </div>
+    </div>
+
     <h2 data-i18n="export">এক্সপোর্ট</h2>
     <div class="group">
       <div class="row" style="gap:6px">
@@ -269,6 +474,21 @@
         <button class="btn block" id="exportPDF" type="button" data-i18n="exportPDF">PDF এক্সপোর্ট</button>
       </div>
       <div class="row"><span class="status" id="status">প্রস্তুত।</span></div>
+    </div>
+
+    <h2 data-i18n="project">প্রকল্প</h2>
+    <div class="group">
+      <div class="row" style="gap:6px">
+        <button class="btn block" id="saveProject" type="button" data-i18n="saveProject">প্রকল্প সংরক্ষণ</button>
+      </div>
+      <div class="row" style="gap:6px">
+        <button class="btn block" id="loadProject" type="button" data-i18n="loadProject">প্রকল্প লোড</button>
+        <input type="file" id="projectFile" accept=".json" style="display:none">
+      </div>
+      <div class="row" style="gap:6px">
+        <button class="btn" id="undo" type="button" data-i18n="undo">↶ আনডু</button>
+        <button class="btn" id="redo" type="button" data-i18n="redo">↷ রিডু</button>
+      </div>
     </div>
   </aside>
 
@@ -282,6 +502,7 @@
         <span class="chip" data-zoom="1.5">150%</span>
       </div>
       <div class="spacer"></div>
+      <span class="status" id="selectionStatus" data-i18n="noSelection">কিছু নির্বাচিত নয়</span>
       <button class="btn" id="resetLayout" type="button" data-i18n="resetLayout">লেআউট রিসেট</button>
       <button class="btn" id="print" type="button" data-i18n="print">প্রিন্ট</button>
     </div>
@@ -340,9 +561,9 @@ const $$ = (q, root=document) => Array.from(root.querySelectorAll(q));
 const poster = $("#poster");
 const ids = {
   party: $("#party"), election: $("#election"), candidate: $("#candidate"),
-  role: $("#role"), slogan: $("#slogan"), hashtag: $("#hashtag"),
+  role: $("#role"), slogan: $("#slogan"), hashtag: $("#hashtag"), ribbonText: $("#ribbonText"),
   cPrimary: $("#cPrimary"), cSecondary: $("#cSecondary"), cAccent: $("#cAccent"), cText: $("#cText"),
-  size: $("#size"), uiLang: $("#uiLang"),
+  size: $("#size"), uiLang: $("#uiLang"), ribbonPosition: $("#ribbonPosition"), layoutMode: $("#layoutMode"),
   logo: $("#logo"), photo: $("#photo"), symbol: $("#symbol"),
   partyText: $("#partyText"), electionText: $("#electionText"),
   candidateName: $("#candidateName"), roleText: $("#roleText"),
@@ -494,6 +715,322 @@ function applyBG(){
   ids.bg.style.background = BG_OVERLAY ? `${BG_OVERLAY}, ${BG_BASE}` : BG_BASE;
 }
 
+/* ========= Project Management ========= */
+let projectHistory = [];
+let historyIndex = -1;
+const maxHistory = 20;
+
+function saveState() {
+  const state = {
+    party: ids.party.value,
+    election: ids.election.value,
+    candidate: ids.candidate.value,
+    role: ids.role.value,
+    slogan: ids.slogan.value,
+    ribbonText: ids.ribbonText.value,
+    hashtag: ids.hashtag.value,
+    colors: {
+      primary: ids.cPrimary.value,
+      secondary: ids.cSecondary.value,
+      accent: ids.cAccent.value,
+      text: ids.cText.value
+    },
+    size: ids.size.value,
+    template: document.querySelector('#templates .chip.active')?.dataset.tpl || 'banner',
+    headerShape: document.querySelector('#headerShapes .chip.active')?.dataset.shape || 'default',
+    ribbonStyle: document.querySelector('#ribbonStyles .chip.active')?.dataset.ribbon || 'classic',
+    ribbonPosition: ids.ribbonPosition.value,
+    layoutMode: ids.layoutMode.value
+  };
+  
+  // Remove future history if we're not at the end
+  if (historyIndex < projectHistory.length - 1) {
+    projectHistory = projectHistory.slice(0, historyIndex + 1);
+  }
+  
+  projectHistory.push(JSON.stringify(state));
+  if (projectHistory.length > maxHistory) {
+    projectHistory.shift();
+  } else {
+    historyIndex++;
+  }
+}
+
+function loadState(stateStr) {
+  const state = JSON.parse(stateStr);
+  
+  ids.party.value = state.party || '';
+  ids.election.value = state.election || '';
+  ids.candidate.value = state.candidate || '';
+  ids.role.value = state.role || '';
+  ids.slogan.value = state.slogan || '';
+  ids.ribbonText.value = state.ribbonText || '';
+  ids.hashtag.value = state.hashtag || '';
+  
+  if(state.colors) {
+    ids.cPrimary.value = state.colors.primary || '#136f63';
+    ids.cSecondary.value = state.colors.secondary || '#0a9396';
+    ids.cAccent.value = state.colors.accent || '#e63946';
+    ids.cText.value = state.colors.text || '#11131a';
+  }
+  
+  ids.size.value = state.size || 'A4-portrait';
+  ids.ribbonPosition.value = state.ribbonPosition || 'top-right';
+  ids.layoutMode.value = state.layoutMode || 'normal';
+  
+  // Trigger updates
+  ids.party.dispatchEvent(new Event('input'));
+  ids.election.dispatchEvent(new Event('input'));
+  ids.candidate.dispatchEvent(new Event('input'));
+  ids.role.dispatchEvent(new Event('input'));
+  ids.slogan.dispatchEvent(new Event('input'));
+  ids.ribbonText.dispatchEvent(new Event('input'));
+  ids.hashtag.dispatchEvent(new Event('input'));
+  
+  applyColors();
+  
+  // Apply template
+  if(state.template) {
+    document.querySelectorAll('#templates .chip').forEach(c => c.classList.remove('active'));
+    document.querySelector(`#templates .chip[data-tpl='${state.template}']`)?.classList.add('active');
+  }
+  
+  // Apply other settings...
+}
+
+$("#saveProject").addEventListener("click", ()=>{
+  saveState();
+  const currentState = projectHistory[historyIndex];
+  const blob = new Blob([currentState], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `election-poster-${new Date().toISOString().split('T')[0]}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  setStatus(ids.uiLang.value==="bn" ? "প্রকল্প সংরক্ষিত" : "Project saved");
+});
+
+$("#loadProject").addEventListener("click", ()=>{
+  ids.projectFile = document.querySelector('#projectFile');
+  ids.projectFile.click();
+});
+
+document.querySelector('#projectFile').addEventListener('change', e=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ()=> {
+    try {
+      loadState(reader.result);
+      setStatus(ids.uiLang.value==="bn" ? "প্রকল্প লোড হয়েছে" : "Project loaded");
+    } catch(err) {
+      setStatus(ids.uiLang.value==="bn" ? "লোড ত্রুটি" : "Load error");
+    }
+  };
+  reader.readAsText(file);
+});
+
+$("#undo").addEventListener("click", ()=>{
+  if(historyIndex > 0) {
+    historyIndex--;
+    loadState(projectHistory[historyIndex]);
+    setStatus(ids.uiLang.value==="bn" ? "আনডু" : "Undo");
+  }
+});
+
+$("#redo").addEventListener("click", ()=>{
+  if(historyIndex < projectHistory.length - 1) {
+    historyIndex++;
+    loadState(projectHistory[historyIndex]);
+    setStatus(ids.uiLang.value==="bn" ? "রিডু" : "Redo");
+  }
+});
+
+// Auto-save state on major changes
+['party', 'election', 'candidate', 'role', 'slogan', 'ribbonText', 'hashtag'].forEach(field => {
+  ids[field].addEventListener('input', () => {
+    clearTimeout(window.autoSaveTimeout);
+    window.autoSaveTimeout = setTimeout(saveState, 1000);
+  });
+});
+
+/* ========= Layout Swap ========= */
+let isLayoutSwapped = false;
+
+$("#swapHeaderFooter").addEventListener("click", ()=>{
+  // Simple position swap without changing content structure
+  poster.classList.toggle("layout-swapped");
+  isLayoutSwapped = !isLayoutSwapped;
+  
+  setStatus(ids.uiLang.value==="bn" ? 
+    (isLayoutSwapped ? "হেডার ও ফুটার সোয়াপ হয়েছে" : "লেআউট পুনরুদ্ধার হয়েছে") : 
+    (isLayoutSwapped ? "Header and Footer swapped" : "Layout restored"));
+});
+
+$("#invertLayout").addEventListener("click", ()=>{
+  poster.classList.toggle("layout-inverted");
+  setStatus(ids.uiLang.value==="bn" ? "লেআউট উল্টানো হয়েছে" : "Layout inverted");
+});
+
+ids.layoutMode.addEventListener("change", e=>{
+  const mode = e.target.value;
+  
+  // Remove all layout classes
+  const layoutClasses = ["layout-inverted", "layout-centered", "layout-minimal-header", "layout-minimal-footer"];
+  layoutClasses.forEach(cls => poster.classList.remove(cls));
+  
+  // Apply selected layout
+  if(mode !== "normal") {
+    poster.classList.add(`layout-${mode}`);
+  }
+});
+
+/* ========= Text Formatting ========= */
+$("#fontSize").addEventListener("input", e=>{
+  const size = e.target.value;
+  document.querySelector('#fontSizeDisplay').textContent = size + 'px';
+  if(selected && selected.tagName === 'DIV' && selected.contentEditable === 'true') {
+    selected.style.fontSize = size + 'px';
+  }
+});
+
+$("#fontFamily").addEventListener("change", e=>{
+  const family = e.target.value;
+  const fontMap = {
+    bangla: 'var(--bangla)',
+    latin: 'var(--latin)',
+    traditional: '"SolaimanLipi", var(--bangla)',
+    modern: '"Roboto", var(--latin)'
+  };
+  if(selected && selected.tagName === 'DIV' && selected.contentEditable === 'true') {
+    selected.style.fontFamily = fontMap[family] || 'var(--bangla)';
+  }
+});
+
+$("#boldText").addEventListener("click", ()=>{
+  if(selected && selected.tagName === 'DIV' && selected.contentEditable === 'true') {
+    const current = selected.style.fontWeight;
+    selected.style.fontWeight = current === '700' || current === 'bold' ? 'normal' : 'bold';
+  }
+});
+
+$("#italicText").addEventListener("click", ()=>{
+  if(selected && selected.tagName === 'DIV' && selected.contentEditable === 'true') {
+    const current = selected.style.fontStyle;
+    selected.style.fontStyle = current === 'italic' ? 'normal' : 'italic';
+  }
+});
+
+$("#underlineText").addEventListener("click", ()=>{
+  if(selected && selected.tagName === 'DIV' && selected.contentEditable === 'true') {
+    const current = selected.style.textDecoration;
+    selected.style.textDecoration = current === 'underline' ? 'none' : 'underline';
+  }
+});
+
+/* ========= Presets ========= */
+$("#presets").addEventListener("click", e=>{
+  const chip = e.target.closest(".chip"); if(!chip) return;
+  $$("#presets .chip").forEach(c=>c.classList.remove("active"));
+  chip.classList.add("active");
+  
+  const presets = {
+    mayoral: {
+      party: "নগর উন্নয়ন দল",
+      election: "মেয়র নির্বাচন ২০২৬",
+      candidate: "মেয়র প্রার্থী",
+      role: "ঢাকা উত্তর সিটি কর্পোরেশন",
+      slogan: "স্মার্ট সিটি • পরিচ্ছন্ন পরিবেশ • উন্নত জীবন",
+      template: "modern",
+      colors: ["#1e40af", "#3b82f6", "#f59e0b", "#1f2937"]
+    },
+    parliament: {
+      party: "জাতীয় ঐক্য দল",
+      election: "জাতীয় সংসদ নির্বাচন ২০২৬",
+      candidate: "সংসদ সদস্য প্রার্থী",
+      role: "নির্বাচনী এলাকা • ঢাকা-৫",
+      slogan: "জনগণের সেবা • দেশের উন্নতি • ভবিষ্যতের আশা",
+      template: "traditional",
+      colors: ["#059669", "#10b981", "#dc2626", "#111827"]
+    },
+    youth: {
+      party: "যুব শক্তি আন্দোলন",
+      election: "যুব নেতৃত্ব নির্বাচন ২০২৬",
+      candidate: "যুব নেতা",
+      role: "তরুণ প্রজন্মের প্রতিনিধি",
+      slogan: "নতুন চিন্তা • নতুন নেতৃত্ব • নতুন বাংলাদেশ",
+      template: "gradient",
+      colors: ["#7c3aed", "#a855f7", "#f97316", "#0f172a"]
+    }
+  };
+  
+  const preset = presets[chip.dataset.preset];
+  if(preset) {
+    ids.party.value = preset.party;
+    ids.election.value = preset.election;
+    ids.candidate.value = preset.candidate;
+    ids.role.value = preset.role;
+    ids.slogan.value = preset.slogan;
+    
+    // Apply colors
+    ids.cPrimary.value = preset.colors[0];
+    ids.cSecondary.value = preset.colors[1];
+    ids.cAccent.value = preset.colors[2];
+    ids.cText.value = preset.colors[3];
+    
+    // Apply template
+    $$("#templates .chip").forEach(c=>c.classList.remove("active"));
+    $(`#templates .chip[data-tpl='${preset.template}']`).classList.add("active");
+    
+    // Trigger updates
+    ['party', 'election', 'candidate', 'role', 'slogan'].forEach(field => {
+      ids[field].dispatchEvent(new Event('input'));
+    });
+    
+    applyColors();
+    setTemplateOverlay(preset.template);
+    applyBG();
+    
+    setStatus(ids.uiLang.value==="bn" ? "প্রিসেট প্রয়োগ হয়েছে" : "Preset applied");
+    saveState();
+  }
+});
+
+/* ========= Ribbon Styles ========= */
+$("#ribbonStyles").addEventListener("click", e=>{
+  const chip = e.target.closest(".chip"); if(!chip) return;
+  $$("#ribbonStyles .chip").forEach(c=>c.classList.remove("active"));
+  chip.classList.add("active");
+  const style = chip.dataset.ribbon;
+  
+  // Remove all ribbon style classes
+  const ribbonClasses = ["ribbon-classic", "ribbon-banner", "ribbon-corner", "ribbon-curved", "ribbon-badge", "ribbon-stamp", "ribbon-hidden"];
+  ribbonClasses.forEach(cls => ids.ribbon.classList.remove(cls));
+  
+  // Apply new ribbon style
+  if(style === "none") {
+    ids.ribbon.classList.add("ribbon-hidden");
+  } else {
+    ids.ribbon.classList.add(`ribbon-${style}`);
+  }
+  
+  // Reapply position
+  applyRibbonPosition();
+});
+
+ids.ribbonPosition.addEventListener("change", applyRibbonPosition);
+
+function applyRibbonPosition(){
+  const pos = ids.ribbonPosition.value;
+  const posClasses = ["ribbon-pos-top-left", "ribbon-pos-center", "ribbon-pos-bottom-right", "ribbon-pos-bottom-left"];
+  posClasses.forEach(cls => ids.ribbon.classList.remove(cls));
+  
+  if(pos !== "top-right") {
+    ids.ribbon.classList.add(`ribbon-pos-${pos}`);
+  }
+}
+
 /* ========= Header Shapes ========= */
 $("#headerShapes").addEventListener("click", e=>{
   const chip = e.target.closest(".chip"); if(!chip) return;
@@ -501,11 +1038,14 @@ $("#headerShapes").addEventListener("click", e=>{
   chip.classList.add("active");
   const shape = chip.dataset.shape;
   
-  // Remove all header shape classes
+  // Remove all header and footer shape classes
   const shapeClasses = ["header-wave", "header-curve-bottom", "header-arch", "header-diagonal", "header-rounded", "header-scoop", "header-mountains", "header-triangle"];
-  shapeClasses.forEach(cls => ids.header.classList.remove(cls));
+  const footerShapeClasses = ["footer-wave", "footer-curve-bottom", "footer-arch", "footer-diagonal", "footer-rounded", "footer-scoop", "footer-mountains", "footer-triangle"];
   
-  // Apply new shape class
+  shapeClasses.forEach(cls => ids.header.classList.remove(cls));
+  footerShapeClasses.forEach(cls => ids.footer.classList.remove(cls));
+  
+  // Apply shape to header (shapes will adapt based on layout)
   if(shape !== "default") {
     ids.header.classList.add(`header-${shape}`);
   }
@@ -604,6 +1144,7 @@ ids.election.addEventListener("input", e=> ids.electionText.textContent = e.targ
 ids.candidate.addEventListener("input", e=> ids.candidateName.textContent = e.target.value||"");
 ids.role.addEventListener("input", e=> ids.roleText.textContent = e.target.value||"");
 ids.slogan.addEventListener("input", e=> ids.sloganText.textContent = e.target.value||"");
+ids.ribbonText.addEventListener("input", e=> ids.ribbon.textContent = e.target.value||"");
 ids.hashtag.addEventListener("input", e=> ids.hashtagText.textContent = e.target.value||"");
 
 /* ========= Media ========= */
@@ -621,22 +1162,85 @@ $("#clearMedia").addEventListener("click", ()=>{
   ids.partyLogo.removeAttribute("src"); ids.candidatePhoto.removeAttribute("src"); ids.symbolImg.removeAttribute("src");
 });
 
-/* ========= Drag / Resize ========= */
-let selected = null, dragOff=[0,0], resizing=false;
+/* ========= Drag / Resize System ========= */
+let selected = null, dragOff=[0,0], resizeMode=null, resizeStart={w:0,h:0,x:0,y:0};
+
 function select(el){
-  if(selected && selected!==el){ selected.classList.remove("selected"); const h=selected.querySelector(".handle"); if(h) h.remove(); }
+  // Clear previous selection
+  if(selected && selected!==el){ 
+    selected.classList.remove("selected"); 
+    $$(selected.querySelectorAll(".resize-handle")).forEach(h=>h.remove());
+  }
   selected = el;
-  if(!selected) return;
+  
+  // Update status display
+  const statusEl = $("#selectionStatus");
+  if(!selected) {
+    statusEl.textContent = ids.uiLang.value === "bn" ? "কিছু নির্বাচিত নয়" : "Nothing selected";
+    return;
+  }
+  
+  // Show what's selected
+  let name = "Unknown";
+  if(selected.id === "header") name = ids.uiLang.value === "bn" ? "হেডার" : "Header";
+  else if(selected.id === "footer") name = ids.uiLang.value === "bn" ? "ফুটার" : "Footer"; 
+  else if(selected.id === "candidateBox") name = ids.uiLang.value === "bn" ? "প্রার্থী" : "Candidate";
+  else if(selected.id === "sloganBox") name = ids.uiLang.value === "bn" ? "স্লোগান" : "Slogan";
+  else if(selected.id === "ribbon") name = ids.uiLang.value === "bn" ? "ফিতা" : "Ribbon";
+  else if(selected.contentEditable === "true") name = ids.uiLang.value === "bn" ? "টেক্সট" : "Text";
+  else if(selected.tagName === "IMG") name = ids.uiLang.value === "bn" ? "ছবি" : "Image";
+  else name = ids.uiLang.value === "bn" ? "আকৃতি" : "Shape";
+  
+  statusEl.textContent = (ids.uiLang.value === "bn" ? "নির্বাচিত: " : "Selected: ") + name;
+  
+  // Add selection styling
   selected.classList.add("selected");
-  if(!selected.querySelector(".handle")){
-    const h = document.createElement("div"); h.className="handle"; selected.appendChild(h);
+  
+  // Add resize handles for all elements
+  if(!selected.querySelector(".resize-handle")){
+    const handles = ['nw','n','ne','w','e','sw','s','se'];
+    handles.forEach(pos=>{
+      const h = document.createElement("div");
+      h.className = `resize-handle ${pos}`;
+      h.dataset.resize = pos;
+      selected.appendChild(h);
+    });
   }
 }
-["candidateBox","sloganBox","header","footer","ribbon"].forEach(id=>{
-  const el = $("#"+id); el.classList.add("draggable");
-  if(id==="header" || id==="footer") el.style.position="absolute";
+
+function makeDraggable(el){
+  if(!el || el.classList.contains('draggable-initialized')) return;
+  el.classList.add('draggable', 'draggable-initialized');
+  
   el.addEventListener("mousedown", e=>{
-    if(e.target.classList.contains("handle")){ resizing=true; select(el); e.preventDefault(); return; }
+    // Handle resize
+    if(e.target.classList.contains("resize-handle")){
+      e.stopPropagation();
+      e.preventDefault();
+      resizeMode = e.target.dataset.resize;
+      select(el);
+      const rect = el.getBoundingClientRect();
+      const pr = poster.getBoundingClientRect();
+      resizeStart = {
+        w: el.offsetWidth,
+        h: el.offsetHeight,
+        x: rect.left - pr.left,
+        y: rect.top - pr.top,
+        mx: e.clientX,
+        my: e.clientY
+      };
+      window.addEventListener("mousemove", resizeMove);
+      window.addEventListener("mouseup", resizeEnd, {once:true});
+      return;
+    }
+    
+    // Handle content editing for text elements
+    if(el.contentEditable === "true" && !e.ctrlKey && !e.metaKey){
+      return; // Let normal text editing happen
+    }
+    
+    // Handle dragging
+    e.preventDefault();
     select(el);
     const rect = el.getBoundingClientRect();
     const pr = poster.getBoundingClientRect();
@@ -644,64 +1248,160 @@ function select(el){
     window.addEventListener("mousemove", dragMove);
     window.addEventListener("mouseup", dragEnd, {once:true});
   });
-});
+}
+
 function dragMove(e){
-  if(!selected || resizing) return;
+  if(!selected || resizeMode) return;
   const pr = poster.getBoundingClientRect();
   let x = e.clientX - pr.left - dragOff[0];
-  let y = e.clientY - pr.top  - dragOff[1];
+  let y = e.clientY - pr.top - dragOff[1];
+  
+  // Keep within poster bounds
   x = Math.max(0, Math.min(x, pr.width - selected.offsetWidth));
   y = Math.max(0, Math.min(y, pr.height - selected.offsetHeight));
-  selected.style.left = x+"px";
-  selected.style.top  = y+"px";
+  
+  selected.style.left = x + "px";
+  selected.style.top = y + "px";
 }
-function dragEnd(){ window.removeEventListener("mousemove", dragMove); }
+
+function dragEnd(){ 
+  window.removeEventListener("mousemove", dragMove); 
+}
+
+function resizeMove(e){
+  if(!selected || !resizeMode) return;
+  
+  const pr = poster.getBoundingClientRect();
+  const dx = e.clientX - resizeStart.mx;
+  const dy = e.clientY - resizeStart.my;
+  
+  let newW = resizeStart.w;
+  let newH = resizeStart.h;
+  let newX = resizeStart.x;
+  let newY = resizeStart.y;
+  
+  // Calculate new dimensions based on resize handle
+  switch(resizeMode){
+    case 'se': newW += dx; newH += dy; break;
+    case 'sw': newW -= dx; newH += dy; newX += dx; break;
+    case 'ne': newW += dx; newH -= dy; newY += dy; break;
+    case 'nw': newW -= dx; newH -= dy; newX += dx; newY += dy; break;
+    case 'e': newW += dx; break;
+    case 'w': newW -= dx; newX += dx; break;
+    case 's': newH += dy; break;
+    case 'n': newH -= dy; newY += dy; break;
+  }
+  
+  // Apply minimum sizes
+  newW = Math.max(20, newW);
+  newH = Math.max(20, newH);
+  
+  // Keep within poster bounds
+  newX = Math.max(0, Math.min(newX, pr.width - newW));
+  newY = Math.max(0, Math.min(newY, pr.height - newH));
+  
+  // Apply new dimensions
+  selected.style.width = newW + "px";
+  selected.style.height = newH + "px";
+  selected.style.left = newX + "px";
+  selected.style.top = newY + "px";
+}
+
+function resizeEnd(){
+  window.removeEventListener("mousemove", resizeMove);
+  resizeMode = null;
+}
+
+// Initialize existing elements
+["candidateBox","sloganBox","header","footer","ribbon"].forEach(id=>{
+  const el = $("#"+id);
+  if(id==="header" || id==="footer") el.style.position="absolute";
+  makeDraggable(el);
+});
+
+// Click outside to deselect
 poster.addEventListener("mousedown", e=>{
   const el = e.target.closest(".draggable");
   if(!el) select(null);
 });
-poster.addEventListener("mousemove", e=>{
+
+// Prevent context menu on resize handles
+poster.addEventListener("contextmenu", e=>{
+  if(e.target.classList.contains("resize-handle")) e.preventDefault();
+});
+
+// Keyboard shortcuts
+document.addEventListener("keydown", e=>{
   if(!selected) return;
-  const handle = selected.querySelector(".handle");
-  if(resizing && handle){
+  
+  // Delete selected element (but not core elements)
+  if(e.key === "Delete" || e.key === "Backspace"){
+    if(!["header","footer","candidateBox","sloganBox","ribbon"].includes(selected.id)){
+      selected.remove();
+      selected = null;
+      e.preventDefault();
+    }
+  }
+  
+  // Arrow key movement
+  if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].includes(e.key)){
+    if(selected.contentEditable === "true" && !e.ctrlKey && !e.metaKey) return; // Allow text editing
+    
+    e.preventDefault();
+    const step = e.shiftKey ? 10 : 1;
+    const current = { x: parseInt(selected.style.left) || 0, y: parseInt(selected.style.top) || 0 };
+    
+    switch(e.key){
+      case "ArrowLeft": current.x -= step; break;
+      case "ArrowRight": current.x += step; break;
+      case "ArrowUp": current.y -= step; break;
+      case "ArrowDown": current.y += step; break;
+    }
+    
+    // Keep within bounds
     const pr = poster.getBoundingClientRect();
-    const w = Math.min(pr.width - selected.offsetLeft, Math.max(100, e.clientX - pr.left - selected.offsetLeft));
-    const h = Math.min(pr.height - selected.offsetTop,  Math.max(60,  e.clientY - pr.top  - selected.offsetTop));
-    selected.style.width = w + "px";
-    selected.style.height= h + "px";
+    current.x = Math.max(0, Math.min(current.x, pr.width - selected.offsetWidth));
+    current.y = Math.max(0, Math.min(current.y, pr.height - selected.offsetHeight));
+    
+    selected.style.left = current.x + "px";
+    selected.style.top = current.y + "px";
+  }
+  
+  // Escape to deselect
+  if(e.key === "Escape"){
+    select(null);
   }
 });
-window.addEventListener("mouseup", ()=>{ resizing=false; });
+
+// Double-click to edit text elements
+poster.addEventListener("dblclick", e=>{
+  const el = e.target.closest(".draggable");
+  if(el && el.contentEditable === "true"){
+    el.focus();
+    // Select all text
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+});
 
 /* ========= Element buttons ========= */
 $("#addText").addEventListener("click", ()=>{
   const div = document.createElement("div");
   div.textContent = (ids.uiLang.value==="bn" ? "সম্পাদনাযোগ্য টেক্সট" : "Editable Text");
-  Object.assign(div.style,{ left:"120px", top:"260px", padding:"6px 10px", fontWeight:"800", background:"#ffffffc8", border:"1px solid #e6e9f4", borderRadius:"8px", fontFamily:(ids.uiLang.value==="bn"?"var(--bangla)":"var(--latin)") });
+  Object.assign(div.style,{ left:"120px", top:"260px", padding:"6px 10px", fontWeight:"800", background:"#ffffffc8", border:"1px solid #e6e9f4", borderRadius:"8px", fontFamily:(ids.uiLang.value==="bn"?"var(--bangla)":"var(--latin)"), minWidth:"100px", minHeight:"30px" });
   div.contentEditable = "true";
-  div.className = "draggable";
   poster.appendChild(div);
-  div.addEventListener("mousedown", e=>{
-    select(div);
-    const rect = div.getBoundingClientRect();
-    dragOff = [e.clientX - rect.left, e.clientY - rect.top];
-    window.addEventListener("mousemove", dragMove);
-    window.addEventListener("mouseup", dragEnd, {once:true});
-  });
+  makeDraggable(div);
   select(div);
 });
 $("#addShape").addEventListener("click", ()=>{
   const box = document.createElement("div");
   Object.assign(box.style,{ left:"80px", top:"420px", width:"220px", height:"90px", background: ids.cAccent.value+"55", border:"2px solid "+ids.cAccent.value, borderRadius:"12px" });
-  box.className="draggable";
   poster.appendChild(box);
-  box.addEventListener("mousedown", e=>{
-    select(box);
-    const rect = box.getBoundingClientRect();
-    dragOff = [e.clientX - rect.left, e.clientY - rect.top];
-    window.addEventListener("mousemove", dragMove);
-    window.addEventListener("mouseup", dragEnd, {once:true});
-  });
+  makeDraggable(box);
   select(box);
 });
 $("#addImage").addEventListener("click", ()=>{
@@ -710,16 +1410,13 @@ $("#addImage").addEventListener("click", ()=>{
   inp.onchange = ev=>{
     const file = ev.target.files[0]; if(!file) return;
     const img = document.createElement("img");
-    img.className="draggable"; img.style.left="140px"; img.style.top="520px"; img.style.width="240px"; img.style.height="auto"; img.style.borderRadius="10px"; img.style.boxShadow="0 6px 16px rgba(0,0,0,.12)";
+    img.style.left="140px"; img.style.top="520px"; img.style.width="240px"; img.style.height="auto"; img.style.borderRadius="10px"; img.style.boxShadow="0 6px 16px rgba(0,0,0,.12)"; img.style.minWidth="50px"; img.style.minHeight="50px";
     const r = new FileReader();
-    r.onload=()=>{ img.src=r.result; poster.appendChild(img); select(img);
-      img.addEventListener("mousedown", e=>{
-        select(img);
-        const rect = img.getBoundingClientRect();
-        dragOff=[e.clientX-rect.left, e.clientY-rect.top];
-        window.addEventListener("mousemove", dragMove);
-        window.addEventListener("mouseup", dragEnd,{once:true});
-      });
+    r.onload=()=>{ 
+      img.src=r.result; 
+      poster.appendChild(img); 
+      makeDraggable(img);
+      select(img);
     };
     r.readAsDataURL(file);
   };
@@ -738,9 +1435,27 @@ $("#resetLayout").addEventListener("click", ()=>{
   
   // Reset header shape
   const shapeClasses = ["header-wave", "header-curve-bottom", "header-arch", "header-diagonal", "header-rounded", "header-scoop", "header-mountains", "header-triangle"];
+  const footerShapeClasses = ["footer-wave", "footer-curve-bottom", "footer-arch", "footer-diagonal", "footer-rounded", "footer-scoop", "footer-mountains", "footer-triangle"];
   shapeClasses.forEach(cls => ids.header.classList.remove(cls));
+  footerShapeClasses.forEach(cls => ids.footer.classList.remove(cls));
   $$("#headerShapes .chip").forEach(c=>c.classList.remove("active"));
   $("#headerShapes .chip[data-shape='default']").classList.add("active");
+  
+  // Reset ribbon style
+  const ribbonClasses = ["ribbon-classic", "ribbon-banner", "ribbon-corner", "ribbon-curved", "ribbon-badge", "ribbon-stamp", "ribbon-hidden"];
+  const ribbonPosClasses = ["ribbon-pos-top-left", "ribbon-pos-center", "ribbon-pos-bottom-right", "ribbon-pos-bottom-left"];
+  ribbonClasses.forEach(cls => ids.ribbon.classList.remove(cls));
+  ribbonPosClasses.forEach(cls => ids.ribbon.classList.remove(cls));
+  ids.ribbon.classList.add("ribbon-classic");
+  $$("#ribbonStyles .chip").forEach(c=>c.classList.remove("active"));
+  $("#ribbonStyles .chip[data-ribbon='classic']").classList.add("active");
+  ids.ribbonPosition.value = "top-right";
+  
+  // Reset layout modes
+  const layoutClasses = ["layout-swapped", "layout-inverted", "layout-centered", "layout-minimal-header", "layout-minimal-footer"];
+  layoutClasses.forEach(cls => poster.classList.remove(cls));
+  ids.layoutMode.value = "normal";
+  isLayoutSwapped = false;
   
   randomRibbon();
   buildBaseBG(); applyBG();
@@ -752,23 +1467,29 @@ $("#print").addEventListener("click", ()=> window.print());
 const I18N = {
   en: {
     settings:"Poster Settings", size:"Size", lang:"Language UI", primary:"Primary", secondary:"Secondary", accent:"Accent", text:"Text",
-    content:"Content", party:"Party", election:"Election", candidate:"Candidate", role:"Role", slogan:"Slogan",
+    content:"Content", party:"Party", election:"Election", candidate:"Candidate", role:"Role", slogan:"Slogan", ribbonText:"Ribbon Text",
     hashtag:"Hashtag", media:"Media", partyLogo:"Party Logo", candidatePhoto:"Candidate Photo", symbol:"Symbol",
     clearMedia:"Clear media", elements:"Elements", addText:"Add Text", addShape:"Add Shape", addImage:"Add Image",
     bringFront:"Bring Front", sendBack:"Send Back", delete:"Delete", templates:"Templates", headerShape:"Header Shape",
+    ribbonStyle:"Ribbon Style", ribbonPosition:"Position", layoutSwap:"Layout Swap", swapHeaderFooter:"Swap Header ⇄ Footer",
+    invertLayout:"Invert Layout", layoutMode:"Layout Mode", project:"Project", saveProject:"Save Project", loadProject:"Load Project",
+    undo:"↶ Undo", redo:"↷ Redo", textFormat:"Text Format", fontFamily:"Font", fontSize:"Size", bold:"Bold", italic:"Italic", underline:"Underline", presets:"Presets",
     export:"Export", exportPNG:"Export PNG", exportPDF:"Export PDF", resetLayout:"Reset Layout", print:"Print",
-    placeholders:{ party:"Party Name", election:"National Election 2026", candidate:"Candidate Name", role:"Constituency • Dhaka-1", slogan:"Progress • Stability • Prosperity", hashtag:"#Vote2026" },
-    defaults:{ party:"Party Name", election:"National Election 2026", candidate:"Candidate Name", role:"Constituency • Dhaka-1", slogan:"Progress • Stability • Prosperity", hashtag:"#Vote2026", ribbon:"BANGLADESH 2026", footer:"Election Commission Compliant Layout" }
+    placeholders:{ party:"Party Name", election:"National Election 2026", candidate:"Candidate Name", role:"Constituency • Dhaka-1", slogan:"Progress • Stability • Prosperity", ribbonText:"BANGLADESH 2026", hashtag:"#Vote2026" },
+    defaults:{ party:"Party Name", election:"National Election 2026", candidate:"Candidate Name", role:"Constituency • Dhaka-1", slogan:"Progress • Stability • Prosperity", ribbonText:"BANGLADESH 2026", hashtag:"#Vote2026", ribbon:"BANGLADESH 2026", footer:"Election Commission Compliant Layout" }
   },
   bn: {
     settings:"পোস্টার সেটিংস", size:"আকার", lang:"ভাষা", primary:"প্রাইমারি", secondary:"সেকেন্ডারি", accent:"অ্যাকসেন্ট", text:"টেক্সট",
-    content:"বিষয়বস্তু", party:"দল", election:"নির্বাচন", candidate:"প্রার্থী", role:"পদ/আসন", slogan:"স্লোগান",
+    content:"বিষয়বস্তু", party:"দল", election:"নির্বাচন", candidate:"প্রার্থী", role:"পদ/আসন", slogan:"স্লোগান", ribbonText:"রিবন টেক্সট",
     hashtag:"হ্যাশট্যাগ", media:"মিডিয়া", partyLogo:"দলের লোগো", candidatePhoto:"প্রার্থীর ছবি", symbol:"প্রতীক",
     clearMedia:"মিডিয়া মুছুন", elements:"উপাদান", addText:"টেক্সট যোগ করুন", addShape:"আকৃতি যোগ করুন", addImage:"ছবি যোগ করুন",
     bringFront:"সামনে আনুন", sendBack:"পেছনে পাঠান", delete:"মুছুন", templates:"টেমপ্লেট", headerShape:"হেডার আকৃতি",
+    ribbonStyle:"রিবন স্টাইল", ribbonPosition:"অবস্থান", layoutSwap:"লেআউট সোয়াপ", swapHeaderFooter:"হেডার ⇄ ফুটার",
+    invertLayout:"উল্টান", layoutMode:"লেআউট মোড", project:"প্রকল্প", saveProject:"প্রকল্প সংরক্ষণ", loadProject:"প্রকল্প লোড",
+    undo:"↶ আনডু", redo:"↷ রিডু", textFormat:"টেক্সট ফরম্যাট", fontFamily:"ফন্ট", fontSize:"আকার", bold:"বোল্ড", italic:"ইটালিক", underline:"আন্ডারলাইন", presets:"প্রিসেট",
     export:"এক্সপোর্ট", exportPNG:"PNG এক্সপোর্ট", exportPDF:"PDF এক্সপোর্ট", resetLayout:"লেআউট রিসেট", print:"প্রিন্ট",
-    placeholders:{ party:"দলের নাম", election:"জাতীয় নির্বাচন ২০২৬", candidate:"প্রার্থীর নাম", role:"নির্বাচনী এলাকা • ঢাকা-১", slogan:"অগ্রগতি • স্থিতিশীলতা • সমৃদ্ধি", hashtag:"#ভোট২০২৬" },
-    defaults:{ party:"দলের নাম", election:"জাতীয় নির্বাচন ২০২৬", candidate:"প্রার্থীর নাম", role:"নির্বাচনী এলাকা • ঢাকা-১", slogan:"অগ্রগতি • স্থিতিশীলতা • সমৃদ্ধি", hashtag:"#ভোট২০২৬", ribbon:"বাংলাদেশ ২০২৬", footer:"নির্বাচন কমিশন অনুবর্তী লেআউট" }
+    placeholders:{ party:"দলের নাম", election:"জাতীয় নির্বাচন ২০২৬", candidate:"প্রার্থীর নাম", role:"নির্বাচনী এলাকা • ঢাকা-১", slogan:"অগ্রগতি • স্থিতিশীলতা • সমৃদ্ধি", ribbonText:"বাংলাদেশ ২০২৬", hashtag:"#ভোট২০২৬" },
+    defaults:{ party:"দলের নাম", election:"জাতীয় নির্বাচন ২০২৬", candidate:"প্রার্থীর নাম", role:"নির্বাচনী এলাকা • ঢাকা-১", slogan:"অগ্রগতি • স্থিতিশীলতা • সমৃদ্ধি", ribbonText:"বাংলাদেশ ২০২৬", hashtag:"#ভোট২০২৬", ribbon:"বাংলাদেশ ২০২৬", footer:"নির্বাচন কমিশন অনুবর্তী লেআউট" }
   }
 };
 let lastLang = "bn";
@@ -783,6 +1504,7 @@ function applyI18N(lang){
   ids.candidate.placeholder= L.placeholders.candidate;
   ids.role.placeholder     = L.placeholders.role;
   ids.slogan.placeholder   = L.placeholders.slogan;
+  ids.ribbonText.placeholder = L.placeholders.ribbonText;
   ids.hashtag.placeholder  = L.placeholders.hashtag;
 
   const Prev = I18N[lastLang].defaults;
@@ -795,6 +1517,7 @@ function applyI18N(lang){
   maybeSwap(ids.candidate, "candidateName", Prev.candidate,Now.candidate);
   maybeSwap(ids.role,      "roleText",      Prev.role,     Now.role);
   maybeSwap(ids.slogan,    "sloganText",    Prev.slogan,   Now.slogan);
+  maybeSwap(ids.ribbonText,"ribbon",        Prev.ribbonText,Now.ribbonText);
   maybeSwap(ids.hashtag,   "hashtagText",   Prev.hashtag,  Now.hashtag);
 
   if(ids.ribbon.textContent.trim() === Prev.ribbon){ ids.ribbon.textContent = Now.ribbon; }
@@ -846,6 +1569,7 @@ buildBaseBG(); setTemplateOverlay("banner"); applyBG();
 randomRibbon();
 applyI18N("bn"); // Bangla default
 initDragBase();
+saveState(); // Save initial state
 setStatus("প্রস্তুত।");
 </script>
 
